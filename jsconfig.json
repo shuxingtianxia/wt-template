@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@routePath/*": ["src/routePath/*"],
+      "@public/*": ["public/*"],
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
