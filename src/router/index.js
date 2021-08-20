@@ -77,4 +77,9 @@ router.afterEach((to, form, next) => {
   util.title(to.meta.title)
 })
 
+router.onReady(() => {
+  const asyncRoutes = store.state.menu.asyncRoutes
+  router.addRoutes(asyncRoutes)
+})
+
 export default router

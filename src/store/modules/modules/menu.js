@@ -12,6 +12,7 @@ export default {
   state: {
     // 侧栏菜单
     aside: [],
+    asyncRoutes: [], // 存放请求过来路由的数据
     // 按钮权限
     btns: [],
     // 侧边栏收缩
@@ -121,6 +122,7 @@ export default {
       //     const asyncRoutes = cloneDeep(routes)
       //     // 把三级路由转成二级路由
       //     const flatRoutes = generateFlatRoutes(asyncRoutes)
+      //     commit('asyncRoutes', flatRoutes, {root: true})
       //     router.addRoutes([...flatRoutes, {
       //       path: '*',
       //       name: '404',
@@ -144,6 +146,10 @@ export default {
       console.log('menu', menu)
       // store 赋值
       state.aside = menu
+    },
+    // 请求过来的路由
+    asyncRoutes: (state, asyncRoutes) => {
+      state.asyncRoutes = asyncRoutes
     },
     // 权限按钮
     setBtns: (state, btns) => {
