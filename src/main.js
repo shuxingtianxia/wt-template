@@ -21,8 +21,9 @@ import '@/utils/toType'
 import '@/api/mock/index'
 
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
-    console.log('销毁')
+  const whiteList = ['/login']
+  const curPath = router.history.current.path
+  if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
     refreshToken.beforeDestroy()
   }
 })

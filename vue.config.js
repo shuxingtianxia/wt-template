@@ -32,6 +32,7 @@ module.exports = {
       errors: true
     },
     open: true,
+    port: 8889,
     proxy: {
       '/service1': {
         // target: "http://192.168.130.220:30101", //原始 dev

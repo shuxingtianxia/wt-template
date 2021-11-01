@@ -1,8 +1,8 @@
 // 设置文件
 import setting from '@/setting.js'
-// import { getMenuList, getButtonList } from '@/api/modules/user'
-// import router from '@/router'
-// import { cloneDeep } from 'lodash'
+import { getMenuList } from '@/api/modules/user'
+import router from '@/router'
+import { cloneDeep } from 'lodash'
 import { frameInRoutes } from '@/router/routes'
 
 // const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
@@ -106,30 +106,30 @@ export default {
       commit('asideSet', [...frameInRoutes])
       commit('page/init', [...frameInRoutes], { root: true })
       await dispatch('account/load', {}, { root: true })
-      // await getMenuList().then(async res => {
-      //   console.log('getMenuList')
-      //   if (res.code === 200) {
-      //     const routes = res.data
-      //     routes.forEach(item => {
-      //       item.isOne = true
-      //     })
-      //     menuList(routes)
-      //     // 存左侧菜单到vuex中
-      //     dispatch('asideSet', [...frameInRoutes, ...routes], { root: true })
-      //     commit('page/init', [...frameInRoutes, ...routes], { root: true })
-      //     // 用户登录后从数据库加载一系列的设置
-      //     await dispatch('account/load', {}, { root: true })
-      //     const asyncRoutes = cloneDeep(routes)
-      //     // 把三级路由转成二级路由
-      //     const flatRoutes = generateFlatRoutes(asyncRoutes)
-      //     commit('asyncRoutes', flatRoutes, {root: true})
-      //     router.addRoutes([...flatRoutes, {
-      //       path: '*',
-      //       name: '404',
-      //       component: (resolve) => require([`@/views/system/error/404`], resolve)
-      //     }])
-      //   }
-      // })
+      await getMenuList().then(async res => {
+        console.log('getMenuList')
+        if (res.code === 200) {
+          const routes = res.data
+          routes.forEach(item => {
+            item.isOne = true
+          })
+          menuList(routes)
+          // 存左侧菜单到vuex中
+          dispatch('asideSet', [...frameInRoutes, ...routes], { root: true })
+          commit('page/init', [...frameInRoutes, ...routes], { root: true })
+          // 用户登录后从数据库加载一系列的设置
+          await dispatch('account/load', {}, { root: true })
+          const asyncRoutes = cloneDeep(routes)
+          // 把三级路由转成二级路由
+          const flatRoutes = generateFlatRoutes(asyncRoutes)
+          commit('asyncRoutes', flatRoutes, { root: true })
+          router.addRoutes([...flatRoutes, {
+            path: '*',
+            name: '404',
+            component: (resolve) => require([`@/views/system/error/404`], resolve)
+          }])
+        }
+      })
       // 获取按钮权限
       // getButtonList().then(res => {
       //   if (res.code === 200) {
@@ -162,27 +162,27 @@ export default {
   }
 }
 // 递归菜单
-// function menuList(data) {
-//   data.forEach(item => {
-//     item.path = item.url
-//     item.meta = {}
-//     item.meta.title = item.chineseName
-//     item.hidden = !item.isShowMenu
-//     if (item.isOne) {
-//       item.component = () => import(`@/layout/header-aside`)
-//     } else if (item.componentPath) {
-//       // item.component = (resolve) => require([`@/views${item.componentPath}`], resolve)
-//       item.component = () => import(`@/views${item.componentPath}`)
-//     } else {
-//       item.component = () => import(`@components/common/RouterView`)
-//     }
-//     item.meta.cache = true
-//     item.name = item.componentName
-//     if (item.children.length) {
-//       menuList(item.children)
-//     }
-//   })
-// }
+function menuList(data) {
+  data.forEach(item => {
+    item.path = item.url
+    item.meta = {}
+    item.meta.title = item.chineseName
+    item.hidden = !item.isShowMenu
+    if (item.isOne) {
+      item.component = () => import(`@/layout/header-aside`)
+    } else if (item.componentPath) {
+      // item.component = (resolve) => require([`@/views${item.componentPath}`], resolve)
+      item.component = () => import(`@/views${item.componentPath}`)
+    } else {
+      item.component = () => import(`@components/common/RouterView`)
+    }
+    item.meta.cache = true
+    item.name = item.componentName
+    if (item.children.length) {
+      menuList(item.children)
+    }
+  })
+}
 
 /**
  * 生成扁平化机构路由(仅两级结构)
@@ -197,52 +197,52 @@ export default {
  *   ]
  * }
  */
-// function generateFlatRoutes(accessRoutes) {
-//   const flatRoutes = []
-//   for (const item of accessRoutes) {
-//     let childrenFflatRoutes = []
-//     if (item.children && item.children.length > 0) {
-//       childrenFflatRoutes = castToFlatRoute(item.children, '')
-//     }
+function generateFlatRoutes(accessRoutes) {
+  const flatRoutes = []
+  for (const item of accessRoutes) {
+    let childrenFflatRoutes = []
+    if (item.children && item.children.length > 0) {
+      childrenFflatRoutes = castToFlatRoute(item.children, '')
+    }
 
-//     // 一级路由是布局路由,需要处理的只是其子路由数据
-//     flatRoutes.push({
-//       name: item.name,
-//       path: item.path,
-//       component: item.component,
-//       redirect: item.redirect,
-//       children: childrenFflatRoutes
-//     })
-//   }
-//   return flatRoutes
-// }
+    // 一级路由是布局路由,需要处理的只是其子路由数据
+    flatRoutes.push({
+      name: item.name,
+      path: item.path,
+      component: item.component,
+      redirect: item.redirect,
+      children: childrenFflatRoutes
+    })
+  }
+  return flatRoutes
+}
 
 /**
  * 将子路由转换为扁平化路由数组（仅一级）
  * @param {待转换的子路由数组} routes
  * @param {父级路由路径} parentPath
  */
-// function castToFlatRoute(routes, parentPath, flatRoutes = []) {
-//   for (const item of routes) {
-//     if (item.children && item.children.length > 0) {
-//       if (item.redirect && item.redirect !== 'noRedirect') {
-//         flatRoutes.push({
-//           name: item.name,
-//           path: (parentPath + '/' + item.path).substring(1),
-//           redirect: item.redirect,
-//           meta: item.meta
-//         })
-//       }
-//       castToFlatRoute(item.children, parentPath + '/' + item.path, flatRoutes)
-//     } else {
-//       flatRoutes.push({
-//         name: item.name,
-//         path: (parentPath + '/' + item.path).substring(1),
-//         component: item.component,
-//         meta: item.meta
-//       })
-//     }
-//   }
+function castToFlatRoute(routes, parentPath, flatRoutes = []) {
+  for (const item of routes) {
+    if (item.children && item.children.length > 0) {
+      if (item.redirect && item.redirect !== 'noRedirect') {
+        flatRoutes.push({
+          name: item.name,
+          path: (parentPath + '/' + item.path).substring(1),
+          redirect: item.redirect,
+          meta: item.meta
+        })
+      }
+      castToFlatRoute(item.children, parentPath + '/' + item.path, flatRoutes)
+    } else {
+      flatRoutes.push({
+        name: item.name,
+        path: (parentPath + '/' + item.path).substring(1),
+        component: item.component,
+        meta: item.meta
+      })
+    }
+  }
 
-//   return flatRoutes
-// }
+  return flatRoutes
+}
