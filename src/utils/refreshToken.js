@@ -51,6 +51,11 @@ class RefreshToken {
       }
     }
   }
+  beforeDestroy() {
+    store.dispatch('account/refeshToken', {}, { root: true })
+    this.currentTime = new Date().getTime()
+    this.distinceTime = 0
+  }
   noWatch() {
     const whiteList = ['/login', '/404']
     const isLoginRoute = whiteList.some(ele => window.location.href.indexOf(ele) > 0)

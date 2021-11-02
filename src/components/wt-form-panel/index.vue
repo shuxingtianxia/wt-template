@@ -41,18 +41,49 @@
               @change="handleChange(field.prop)"
             ></el-input>
             <!-- 数字文本框 -->
-            <el-input
-              v-if="field.type==='number'"
-              v-model.number="dataSource[field.prop]"
-              :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
-              :placeholder="field.placeholder"
+            <!-- 数字框 -->
+            <el-input-number
+              v-else-if="field.type==='number'"
+              v-model="dataSource[field.prop]" :controls="false"
+              :max="field.max" :min="field.min" :precision="field.precision"
               :style="{width: field.width || '100%'}"
+              :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
               v-bind="field.otherConfig"
-              @click="handleClick"
-              @blur="handleBlur"
-              @focus="handleFocus"
+              @click="handleClick(field, $event)"
+              @blur="handleBlur(field, $event)"
+              @focus="handleFocus(field, $event)"
               @change="handleChange(field.prop)"
-            ></el-input>
+            ></el-input-number>
+            <!-- 整数数字框 -->
+            <el-input-number
+              v-else-if="field.type==='integer'"
+              v-model="dataSource[field.prop]"
+              :controls="false"
+              :max="field.max" :min="field.min"
+              :precision="field.precision"
+              :style="{width: field.width || '100%'}"
+              :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
+              v-bind="field.otherConfig"
+              @click="handleClick(field, $event)"
+              @blur="handleBlur(field, $event)"
+              @focus="handleFocus(field, $event)"
+              @change="changeInteger(field, $event)"
+            ></el-input-number>
+            <!-- 浮点数字框 -->
+            <el-input-number
+              v-else-if="field.type==='float'"
+              v-model="dataSource[field.prop]"
+              :controls="false"
+              :max="field.max" :min="field.min"
+              :precision="field.precision"
+              :style="{width: field.width || '100%'}"
+              :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
+              v-bind="field.otherConfig"
+              @click="handleClick(field, $event)"
+              @blur="handleBlur(field, $event)"
+              @focus="handleFocus(field, $event)"
+              @change="handleChange(field.prop)"
+            ></el-input-number>
             <!-- 按钮 -->
             <el-button
               v-else-if="field.type==='button'"
@@ -175,6 +206,9 @@
                 <!-- 只能上传jpg/png文件，且不超过500kb -->
               </div>
             </el-upload>
+            <!-- 删除图片 -->
+            <wt-upload-picture v-else-if="field.type==='image'" :file-lists="dataSource[field.prop]" @onComplete="onCompleteImage" @handleRemove="handleRemoveImage"></wt-upload-picture>
+            <vm-tinyMCE v-else-if="field.type==='rich'" :tinymce-html.sync="dataSource[field.prop]" :height="field.height"></vm-tinyMCE>
             <!-- 自定义插槽 -->
             <slot
               v-else-if="!field.type"
@@ -193,8 +227,12 @@
   </div>
 </template>
 <script>
+import wtUploadPicture from '@/components/wt-upload-picture'
 export default {
   name: '',
+  components: {
+    wtUploadPicture
+  },
   props: {
     mode: { // 查看方式
       type: String,
@@ -226,15 +264,25 @@ export default {
     }
   },
   methods: {
+    // 整数校验
+    changeInteger(field, val) {
+      console.log('val', parseInt(val))
+      this.dataSource[field.prop] = parseInt(val) || undefined
+      this.$emit('changeInteger', field, val)
+    },
+    // 点击事件
     handleClick(field, event) {
       this.$emit('click', this, field, event)
     },
+    // 失去焦点
     handleBlur(field, event) {
       this.$emit('blur', this, field, event)
     },
+    // 获得焦点
     handleFocus(field, event) {
       this.$emit('focus', this, field, event)
     },
+    // change事件
     handleChange(prop) {
       this.$emit('change', this, prop, event.target.value)
     },
@@ -297,6 +345,13 @@ export default {
     // 点击按钮
     onFieldButtonClick(filed) {
 
+    },
+    // 删除图片
+    handleRemoveImage() {
+      this.form.articleImgUrl = ''
+    },
+    onCompleteImage(url) {
+      this.form.articleImgUrl = url
     }
   }
 }

@@ -56,7 +56,9 @@ export default {
       // 下拉列表
       options: {},
       fields,
-      dataSource: {},
+      dataSource: {
+        detail: ''
+      },
       fromCity: '',
       formAddress: '',
       toCity: '',

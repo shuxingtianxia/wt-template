@@ -77,3 +77,20 @@ export function downloadEnclosure(params) {
     params
   })
 }
+
+export const addPhoto = (data) => {
+  return service({
+    url: `/photo_add`,
+    method: 'post',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data
+  })
+}
+
+// 获取七牛云token
+export const getQiniuToken = () => {
+  return service({
+    url: `/getToken`,
+    method: 'get'
+  })
+}

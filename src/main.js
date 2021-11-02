@@ -4,6 +4,10 @@ import i18n from './i18n'
 import App from './App'
 // 核心插件
 import d2Admin from '@/plugin/d2admin'
+
+// 封装组件
+import vmTinyMCE from '@/components/TinyMCE'
+
 // store
 import store from '@/store/index'
 import '@/plugin/utils'
@@ -20,11 +24,15 @@ import '@/utils/toType'
 
 import '@/api/mock/index'
 
+import util from '@/libs/util.js'
+
 document.addEventListener('visibilitychange', () => {
   const whiteList = ['/login']
   const curPath = router.history.current.path
+  const token = util.cookies.get('token')
+  console.log('token', token)
   if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
-    refreshToken.beforeDestroy()
+    if (token && token !== 'undefined') refreshToken.beforeDestroy()
   }
 })
 
@@ -41,6 +49,9 @@ Vue.use(pluginImport)
 
 // 核心插件
 Vue.use(d2Admin)
+
+// 富文本编辑器
+Vue.component('vm-tinyMCE', vmTinyMCE)
 
 // 按钮权限
 Vue.prototype.hasButtonPermission = (permission) => {
