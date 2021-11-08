@@ -1,10 +1,12 @@
-import { service } from '@/api/service'
+import { requestForMock } from '@/api/service'
+// 正式接口开发请使用 service 代替 requestForMock
+const service = requestForMock
 /*
   获取数据权限列表
 */
 export function getDataAuthList(data) {
   return service({
-    url: '/service1/tms-portal/dataAuth/list',
+    url: '/dataAuth/list',
     method: 'post',
     data
   })
@@ -15,7 +17,7 @@ export function getDataAuthList(data) {
 */
 export function queryByMod(params) {
   return service({
-    url: '/service1/tms-portal/dataAuthField/queryByMod',
+    url: '/dataAuthField/queryByMod',
     method: 'get',
     params
   })
@@ -26,7 +28,7 @@ export function queryByMod(params) {
 */
 export function addDataAuth(data) {
   return service({
-    url: '/service1/tms-portal/dataAuth/add',
+    url: '/dataAuth/add',
     method: 'post',
     data
   })
@@ -37,7 +39,7 @@ export function addDataAuth(data) {
 */
 export function dataAuthDetail(params) {
   return service({
-    url: '/service1/tms-portal/dataAuth/echo',
+    url: '/dataAuth/echo',
     method: 'get',
     params
   })
@@ -48,7 +50,7 @@ export function dataAuthDetail(params) {
 */
 export function delDataAuth(data) {
   return service({
-    url: '/service1/tms-portal/dataAuth/delete',
+    url: '/dataAuth/delete',
     method: 'post',
     data
   })

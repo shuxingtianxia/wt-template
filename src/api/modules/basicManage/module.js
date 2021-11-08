@@ -1,10 +1,10 @@
-import { service } from '../../service'
+import { request } from '../../service'
 /*
   获取模块列表
 */
 export function getModuleList(data) {
-  return service({
-    url: '/service1/tms-portal/dataAuthField/list',
+  return request({
+    url: '/dataAuthField/list',
     method: 'post',
     data
   })
@@ -14,8 +14,8 @@ export function getModuleList(data) {
   保存模块列表
 */
 export function updateModuleList(data) {
-  return service({
-    url: '/service1/tms-portal/dataAuthField/update',
+  return request({
+    url: '/dataAuthField/update',
     method: 'post',
     data
   })
@@ -25,8 +25,8 @@ export function updateModuleList(data) {
   删除模块列表
 */
 export function deleteModuleList(data) {
-  return service({
-    url: '/service1/tms-portal/dataAuthField/delete',
+  return request({
+    url: '/dataAuthField/delete',
     method: 'post',
     data
   })

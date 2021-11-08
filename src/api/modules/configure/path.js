@@ -8,7 +8,7 @@ const service = requestForMock
 */
 export function getPathAll(data) {
   return service({
-    url: '/service1/tms-portal/route/all',
+    url: '/route/all',
     method: 'post',
     data
   })
@@ -19,7 +19,7 @@ export function getPathAll(data) {
 */
 export function getPathList(data) {
   return service({
-    url: '/service1/tms-portal/route/list',
+    url: '/route/list',
     method: 'post',
     data
   })
@@ -30,7 +30,7 @@ export function getPathList(data) {
 */
 export function deleteBatch(data) {
   return service({
-    url: '/service1/tms-portal/route/deleteBatch',
+    url: '/route/deleteBatch',
     method: 'delete',
     data
   })
@@ -41,7 +41,7 @@ export function deleteBatch(data) {
 */
 export function addPathList(data) {
   return service({
-    url: '/service1/tms-portal/route/add',
+    url: '/route/add',
     method: 'post',
     data
   })
@@ -52,7 +52,7 @@ export function addPathList(data) {
 */
 export function importExcel(data) {
   return service({
-    url: '/service1/tms-portal/route/importExcel',
+    url: '/route/importExcel',
     method: 'post',
     data
   })

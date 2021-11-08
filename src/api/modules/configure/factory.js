@@ -9,7 +9,7 @@ const service = requestForMock
 */
 export function getFactoryList(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/list',
+    url: '/factoryWarehouse/list',
     method: 'post',
     data
   })
@@ -20,7 +20,7 @@ export function getFactoryList(data) {
 */
 export function getFactoryAll(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/all',
+    url: '/factoryWarehouse/all',
     method: 'post',
     data
   })
@@ -31,7 +31,7 @@ export function getFactoryAll(data) {
 */
 export function addFactoryList(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/add',
+    url: '/factoryWarehouse/add',
     method: 'post',
     data
   })
@@ -42,7 +42,7 @@ export function addFactoryList(data) {
 */
 export function editFactoryList(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/edit',
+    url: '/factoryWarehouse/edit',
     method: 'put',
     data
   })
@@ -53,7 +53,7 @@ export function editFactoryList(data) {
 */
 export function importExcel(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/importExcel',
+    url: '/factoryWarehouse/importExcel',
     method: 'post',
     data
   })
@@ -64,7 +64,7 @@ export function importExcel(data) {
 */
 export function batchDeleteFactory(data) {
   return service({
-    url: '/service1/tms-portal/factoryWarehouse/deleteBatch',
+    url: '/factoryWarehouse/deleteBatch',
     method: 'delete',
     data
   })

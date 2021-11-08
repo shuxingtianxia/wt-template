@@ -1,10 +1,10 @@
-import { service } from '../../service'
+import { request } from '../../service'
 /*
   获取树形列表
 */
 export function getTreeList() {
-  return service({
-    url: '/service1/tms-portal/dict/treeList',
+  return request({
+    url: '/dict/treeList',
     method: 'get'
   })
 }
@@ -13,8 +13,8 @@ export function getTreeList() {
   添加字典表
 */
 export function addDict(data) {
-  return service({
-    url: '/service1/tms-portal/dict/add',
+  return request({
+    url: '/dict/add',
     method: 'post',
     data
   })
@@ -24,8 +24,8 @@ export function addDict(data) {
   修改字典表
 */
 export function editDict(data) {
-  return service({
-    url: '/service1/tms-portal/dict/edit',
+  return request({
+    url: '/dict/edit',
     method: 'put',
     data
   })
@@ -35,8 +35,8 @@ export function editDict(data) {
   修改字典表
 */
 export function delDict(params) {
-  return service({
-    url: '/service1/tms-portal/dict/delete',
+  return request({
+    url: '/dict/delete',
     method: 'delete',
     params
   })
@@ -46,8 +46,8 @@ export function delDict(params) {
   字典值分页查询
 */
 export function getDictItemList(data) {
-  return service({
-    url: '/service1/tms-portal/dictItem/list',
+  return request({
+    url: '/dictItem/list',
     method: 'post',
     data
   })
@@ -57,8 +57,8 @@ export function getDictItemList(data) {
   字典值分页查询
 */
 export function addOrEditOrDeleteDict(data) {
-  return service({
-    url: '/service1/tms-portal/dictItem/addOreditOrdelete',
+  return request({
+    url: '/dictItem/addOreditOrdelete',
     method: 'post',
     data
   })

@@ -1,12 +1,12 @@
-import { service } from '../../service'
+import { request } from '../../service'
 
 /* --------------------- 角色管理 ------------------------ */
 /*
   获取角色列表
 */
 export function getUserRoleListPage(data) {
-  return service({
-    url: '/service1/tms-portal/user/getUserRoleListPage',
+  return request({
+    url: '/user/getUserRoleListPage',
     method: 'post',
     data
   })
@@ -16,8 +16,8 @@ export function getUserRoleListPage(data) {
   获取角色列表
 */
 export function getRoleAuth(params) {
-  return service({
-    url: '/service1/tms-portal/roleAuth/getRoleAuth',
+  return request({
+    url: '/roleAuth/getRoleAuth',
     method: 'post',
     params
   })
@@ -27,8 +27,8 @@ export function getRoleAuth(params) {
   保存角色列表
 */
 export function saveRoleAuth(data) {
-  return service({
-    url: '/service1/tms-portal/roleAuth/saveRoleAuth',
+  return request({
+    url: '/roleAuth/saveRoleAuth',
     method: 'post',
     data
   })
@@ -38,8 +38,8 @@ export function saveRoleAuth(data) {
   获取当前用户的角色列表
 */
 export function getUserRoleList() {
-  return service({
-    url: '/service1/tms-portal/user/getUserRoleList',
+  return request({
+    url: '/user/getUserRoleList',
     method: 'post'
   })
 }
@@ -48,8 +48,8 @@ export function getUserRoleList() {
   获取敏感字段列表
 */
 export function getSensitiveFieldList(params) {
-  return service({
-    url: '/service1/tms-portal/dataAuthField/sensitiveFieldList',
+  return request({
+    url: '/dataAuthField/sensitiveFieldList',
     method: 'get',
     params
   })
@@ -59,8 +59,8 @@ export function getSensitiveFieldList(params) {
   获取数据权限字段列表
 */
 export function getAuthDataList(params) {
-  return service({
-    url: '/service1/tms-portal/dataAuth/authDataList',
+  return request({
+    url: '/dataAuth/authDataList',
     method: 'get',
     params
   })

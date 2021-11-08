@@ -1,11 +1,11 @@
-import { service } from '@/api/service'
+import { request } from '@/api/service'
 
 /*
   通过字典码查询字典值数据
 */
 export function getItemValue(params) {
-  return service({
-    url: '/service1/tms-portal/dictItem/getItemValue?dictName=' + params,
+  return request({
+    url: '/dictItem/getItemValue?dictName=' + params,
     method: 'get'
   })
 }
@@ -14,8 +14,8 @@ export function getItemValue(params) {
   通过字典码查询字典值数据
 */
 export function getMoreDictItems(params) {
-  return service({
-    url: '/service1/tms-portal/dictItem/getMoreDictItems',
+  return request({
+    url: '/dictItem/getMoreDictItems',
     method: 'get',
     params
   })
@@ -25,8 +25,8 @@ export function getMoreDictItems(params) {
   获取多个字典码的字典值数据
 */
 export function getMoreItemValue(params) {
-  return service({
-    url: '/service1/tms-portal/dictItem/getMoreItemValue',
+  return request({
+    url: '/dictItem/getMoreItemValue',
     method: 'get',
     params
   })
@@ -36,8 +36,8 @@ export function getMoreItemValue(params) {
   生成唯一编码
 */
 export function getCommonCode() {
-  return service({
-    url: '/service1/tms-portal/common/code',
+  return request({
+    url: '/common/code',
     method: 'get'
   })
 }
@@ -48,8 +48,8 @@ export function getCommonCode() {
   添加附件
 */
 export function addEnclosure(data) {
-  return service({
-    url: '/service1/tms-portal/attach/add',
+  return request({
+    url: '/attach/add',
     method: 'post',
     data,
     processData: false
@@ -60,8 +60,8 @@ export function addEnclosure(data) {
   删除附件
 */
 export function delEnclosure(params) {
-  return service({
-    url: '/service1/tms-portal/attach/delete',
+  return request({
+    url: '/attach/delete',
     method: 'get',
     params
   })
@@ -71,15 +71,15 @@ export function delEnclosure(params) {
   下载附件
 */
 export function downloadEnclosure(params) {
-  return service({
-    url: '/service1/tms-portal/attach/download',
+  return request({
+    url: '/attach/download',
     method: 'get',
     params
   })
 }
 
 export const addPhoto = (data) => {
-  return service({
+  return request({
     url: `/photo_add`,
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -89,7 +89,7 @@ export const addPhoto = (data) => {
 
 // 获取七牛云token
 export const getQiniuToken = () => {
-  return service({
+  return request({
     url: `/getToken`,
     method: 'get'
   })
