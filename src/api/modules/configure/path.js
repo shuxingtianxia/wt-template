@@ -26,6 +26,17 @@ export function getPathList(data) {
 }
 
 /*
+  分页查询列表信息
+*/
+export function getPathHeadList(data) {
+  return service({
+    url: '/head/list',
+    method: 'get',
+    data
+  })
+}
+
+/*
   批量删除
 */
 export function deleteBatch(data) {

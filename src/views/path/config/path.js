@@ -68,8 +68,23 @@ export const barBtns = [
     type: 'danger',
     icon: 'fa-plus',
     clickType: 'batchDelete'
+  },
+  {
+    text: '导出列表',
+    type: 'warning',
+    icon: 'fa-plus',
+    clickType: 'handleExport',
+    fileName: '路径配置模板'
   }
 ]
+
+export const tableExport = {
+  setColumnStyle({ columnIndex }) {
+    if (columnIndex === 3) {
+      return { width: 40, style: { font: { bold: true }}}
+    }
+  }
+}
 
 export const toolbar = {
   export: true,

@@ -11,7 +11,7 @@ mock.onGet('/service1/tms-portal/user/refresh/token').reply(200, {
 })
 
 // 列表
-mock.onPost('/service1/tms-portal/route/list').reply(200, {
+mock.onPost('/route/list').reply(200, {
   code: 200,
   data: {
     content: [
@@ -41,6 +41,37 @@ mock.onPost('/service1/tms-portal/route/list').reply(200, {
     ],
     'totalElements': 7
   }
+})
+
+// 获取表头数据
+mock.onGet('/head/list').reply(200, {
+  code: 200,
+  data: [
+    {
+      label: '收货地址',
+      value: 'toAddress'
+    },
+    {
+      label: '路径编号',
+      value: 'code'
+    },
+    {
+      label: '起始国家',
+      value: 'fromCountry'
+    },
+    {
+      label: '始发地',
+      value: 'fromCity'
+    },
+    {
+      label: '起运地地址',
+      value: 'fromAddress'
+    },
+    {
+      label: '目的地',
+      value: 'toCity'
+    }
+  ]
 })
 
 // 下拉的数据

@@ -60,7 +60,7 @@
       <vxe-table-column v-if="otherConfig.radio" type="radio" width="60"></vxe-table-column>
       <vxe-table-column type="seq" width="40"></vxe-table-column>
       <vxe-table-column
-        v-for="(item, index) in tableConfig"
+        v-for="(item, index) in tableHeadList"
         :key="index"
         :title="item.label"
         :width="item.width || ''"
@@ -97,6 +97,7 @@ import { tableMenu } from './basicTable'
 import { arrayUnique2 } from '@/utils/validate'
 import files from '@/utils/files'
 import setHeight from '@/mixin/setTableHeight'
+import { ElMapExportTable } from 'table-excel'
 export default {
   name: '',
   mixins: [setHeight],
@@ -179,6 +180,14 @@ export default {
     delStr: { // 删除需要校验的字段
       type: String,
       default: ''
+    },
+    tableExport: { // 表格导出配置
+      type: Object,
+      default: () => ({})
+    },
+    requestHead: { // 是否请求表头
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -186,6 +195,7 @@ export default {
       loading: false, // 加载中
       isFullDisplay: false,
       tableMenu, // 复制粘贴
+      tableHeadList: [], // 表头
       // 表格数据
       tableData: [],
       // 分页
@@ -214,10 +224,21 @@ export default {
     'pagination.pageSize': function(val) {
       this.pagination.currentPage = 1
       this.getTableList()
+    },
+    tableConfig: {
+      handler(val) {
+        console.log('val', val)
+        if (!this.requestHead) this.tableHeadList = val
+      },
+      deep: true,
+      immediate: true
     }
   },
   mounted() {
     this.getTableList()
+    if (this.requestHead) {
+      this.getTableHeadList()
+    }
   },
   methods: {
     // 获取列表数据
@@ -243,6 +264,20 @@ export default {
         }
       })
     },
+    // 获取表头列表
+    getTableHeadList() {
+      const arr = []
+      this.requestConfig.getTableHeadData().then(res => {
+        if (res.code === 200) {
+          this.tableConfig.forEach(item => {
+            const result = res.data.find(item1 => item1.value === item.key)
+            if (result) arr.push({ ...result, ...item })
+          })
+          console.log('arr', arr)
+          this.tableHeadList = arr
+        }
+      })
+    },
     // 图标操作
     handle() {
 
@@ -255,6 +290,9 @@ export default {
           break
         case 'downloadTemplate': // 下载本地模板
           files.downloadTemplate(item.fileUrl, item.fileName)
+          break
+        case 'handleExport': // 批量删除
+          this.handleExport(item.fileName)
           break
         case 'batchDelete': // 批量删除
           this.batchDelete(item.tip, item.idType)
@@ -320,6 +358,26 @@ export default {
           this.$message.warning('上传的文件不能为空！')
         }
       })
+    },
+    // 前端导出excel列表
+    handleExport(fileName) {
+      const column = []
+      this.tableConfig.forEach(item => {
+        column.push({
+          title: item.label,
+          dataIndex: item.key
+        })
+      })
+      const instance = new ElMapExportTable(
+        { column, data: this.tableData,
+          ...this.tableExport
+        },
+        { progress: progress => {
+          this.loading = true
+          if (progress === 100) this.loading = false
+        } }// 进度条回调
+      )
+      instance.download(fileName)
     },
     // 批量删除
     batchDelete(tip, idType) {

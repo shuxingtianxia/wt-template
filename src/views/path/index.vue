@@ -10,6 +10,7 @@
       :table-config="tableConfig"
       :request-config="requestConfig"
       :toolbar="toolbar"
+      :table-export="tableExport"
       data-type="content"
       total-item="totalElements"
       :import-obj="{orgType: 'S'}"
@@ -24,9 +25,9 @@
   </div>
 </template>
 <script>
-import { tableConfig, barBtns, formConfig, toolbar } from './config/path'
+import { tableConfig, barBtns, formConfig, toolbar, tableExport } from './config/path'
 import WtListView from '@/components/wt-list-view'
-import { getPathList, deleteBatch, importExcel } from '@/api/modules/configure/path'
+import { getPathList, deleteBatch, importExcel, getPathHeadList } from '@/api/modules/configure/path'
 export default {
   name: 'PathConfigureList',
   components: {
@@ -56,11 +57,14 @@ export default {
       barBtns,
       // 表格配置
       tableConfig,
+      // 表格导出配置
+      tableExport,
       // 请求配置
       requestConfig: {
         getTableData: getPathList,
         import: importExcel,
-        batchDelete: deleteBatch
+        batchDelete: deleteBatch,
+        getTableHeadData: getPathHeadList
       },
       // 图标配置
       toolbar
