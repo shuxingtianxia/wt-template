@@ -41,20 +41,20 @@ const frameIn = [
     path: '/path',
     name: 'Path',
     component: layoutHeaderAside,
-    meta: { title: '路径管理配置', icon: 'dashboard' },
+    meta: { title: 'route.systemManage', icon: 'dashboard' },
     children: [
       {
         path: 'list',
         component: _import('path'),
         name: 'PathConfigureList',
-        meta: { title: '路径管理配置', icon: 'dashboard', cache: true }
+        meta: { title: 'inl8111', icon: 'dashboard', cache: true }
       },
       {
         path: 'add',
         component: _import('path/add'),
         name: 'PathConfigureAdd',
         hidden: true,
-        meta: { title: '路径管理配置(新建)', icon: 'dashboard', cache: true }
+        meta: { title: 'route.systemManage', icon: 'dashboard', cache: true }
       }
     ]
   }

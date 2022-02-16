@@ -99,9 +99,7 @@ router.afterEach((to, form, next) => {
 })
 
 router.onReady(() => {
-  const asyncRoutes = store.state.menu.asyncRoutes
-  // router.addRoutes(asyncRoutes)
-  router.addRoutes([...asyncRoutes, {
+  router.addRoutes([{
     path: '*',
     name: '404',
     component: (resolve) => require([`@/views/system/error/404`], resolve)

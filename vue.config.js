@@ -36,8 +36,7 @@ module.exports = {
     proxy: {
       '/service1': {
         // target: "http://192.168.130.220:30101", //原始 dev
-        target: 'http://192.168.130.62:30001', // dev环境
-        // target: 'http://192.168.47.105:30001/', // 书武
+        target: 'http://srmgatewaydev.wingtech.com', // dev环境
         // target: " http://192.168.46.65:30001", //x
         // target: " http://192.168.47.70:30001", //s
         changeOrigin: true,
@@ -45,16 +44,6 @@ module.exports = {
         websocket: false,
         pathRewrite: {
           '^/service1': '/service1'
-        },
-        secure: false
-      },
-      '/sso': {
-        target: 'http://192.168.130.61:3010',
-        changeOrigin: true,
-        timeout: 6000,
-        websocket: false,
-        pathRewrite: {
-          '^/sso': '/sso'
         },
         secure: false
       }

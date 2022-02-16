@@ -110,7 +110,6 @@
   </div>
 </template>
 <script>
-// import { checkCode, forget } from '@/api/modules/user'
 import hidePwdImg from '@/assets/images/login/icon_hide@2x.png'
 import showPwdImg from '@/assets/images/login/icon_show.png'
 export default {

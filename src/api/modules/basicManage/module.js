@@ -1,4 +1,4 @@
-import { request } from '../../service'
+import { request } from '@/api/service'
 /*
   获取模块列表
 */

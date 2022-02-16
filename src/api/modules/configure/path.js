@@ -1,4 +1,4 @@
-import { requestForMock } from '../../service'
+import { requestForMock } from '@/api/service'
 // 正式接口开发请使用 service 代替 requestForMock
 const service = requestForMock
 

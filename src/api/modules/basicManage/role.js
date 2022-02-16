@@ -1,4 +1,4 @@
-import { request } from '../../service'
+import { request } from '@/api/service'
 
 /* --------------------- 角色管理 ------------------------ */
 /*

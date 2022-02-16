@@ -1,4 +1,4 @@
-import { request } from '@/api/service'
+import { request, requestForMock } from '@/api/service'
 
 /*
   通过字典码查询字典值数据
@@ -91,6 +91,14 @@ export const addPhoto = (data) => {
 export const getQiniuToken = () => {
   return request({
     url: `/getToken`,
+    method: 'get'
+  })
+}
+
+/* ---------------- 多语言  ------------------------ */
+export const getLanguage = () => {
+  return requestForMock({
+    url: '/language',
     method: 'get'
   })
 }

@@ -277,3 +277,20 @@ mock.onGet('/service1/tms-portal/user/getMenuList').reply(200, {
     }
   ]
 })
+
+// 获取多语言
+mock.onGet('/service1/tms-portal/language').reply(200, {
+  code: 200,
+  data: [
+    {
+      en: 'haha',
+      zh: '配置',
+      code: 'inl8111'
+    },
+    {
+      en: 'wwwwwww',
+      zh: 'systemManage1',
+      code: 'inl8112'
+    }
+  ]
+})

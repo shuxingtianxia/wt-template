@@ -213,7 +213,6 @@ export default {
     // 表格的搜索参数
     tableArgs: {
       handler(val) {
-        console.log('val', val)
         this.getTableList(val)
       },
       deep: true
@@ -227,11 +226,10 @@ export default {
     },
     tableConfig: {
       handler(val) {
-        console.log('val', val)
         if (!this.requestHead) this.tableHeadList = val
       },
       deep: true,
-      immediate: true
+      immediate: true // 是否立即执行
     }
   },
   mounted() {

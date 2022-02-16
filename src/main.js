@@ -4,8 +4,10 @@ import i18n from './i18n'
 import App from './App'
 // 核心插件
 import d2Admin from '@/plugin/d2admin'
+// 闻泰内部组件
+import wtUi from '@/components/wt-ui'
 
-// 封装组件
+// 富文本组件
 import vmTinyMCE from '@/components/TinyMCE'
 
 // store
@@ -17,7 +19,6 @@ import refreshToken from './utils/refreshToken'
 refreshToken.setRefreshToken()
 // 菜单和路由设置
 import router from './router'
-// import { frameInRoutes } from '@/router/routes'
 
 // 检验数据类型
 import '@/utils/toType'
@@ -26,11 +27,11 @@ import '@/api/mock/index'
 
 import util from '@/libs/util.js'
 
+// 切换标签页
 document.addEventListener('visibilitychange', () => {
   const whiteList = ['/login']
   const curPath = router.history.current.path
   const token = util.cookies.get('token')
-  console.log('token', token)
   if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
     if (token && token !== 'undefined') refreshToken.beforeDestroy()
   }
@@ -46,12 +47,20 @@ Vue.prototype.$bus = new Vue() // event Bus 用于无关系组件间的通信。
 // 导入表格
 import pluginImport from '@d2-projects/vue-table-import'
 Vue.use(pluginImport)
+// 获取多语言的接口
+import { getLanguage } from '@/api/modules/common'
 
 // 核心插件
 Vue.use(d2Admin)
+// 闻泰内部组件
+Vue.use(wtUi)
 
 // 富文本编辑器
 Vue.component('vm-tinyMCE', vmTinyMCE)
+
+// 环境配置
+import config from '@/libs/config'
+Vue.prototype.$config = config
 
 // 按钮权限
 Vue.prototype.hasButtonPermission = (permission) => {
@@ -62,26 +71,23 @@ window.addEventListener('error', (err) => {
   console.log('err', err)
 })
 new Vue({
+  i18n,
   router,
   store,
-  i18n,
   computed: {
     ...mapState('permission', [
       'routes'
     ])
   },
-  // watch: {
-  //   // 检测路由变化切换侧边栏内容
-  //   '$route.matched': {
-  //     handler(matched) {
-  //       if (matched.length > 0) {
-  //         const _side = this.routes.filter(menu => menu.path === matched[0].path)
-  //         this.$store.commit('menu/asideSet', _side.length > 0 ? _side[0].children : [])
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // },
+  created() {
+    // 收集后端返回的多语言添加到对应的json文件中
+    getLanguage().then(res => {
+      if (res.code === 200) {
+        this.setLanguage('en', res)
+        this.setLanguage('zh', res)
+      }
+    })
+  },
   mounted() {
     // 展示系统信息
     this.$store.commit('releases/versionShow')
@@ -90,6 +96,16 @@ new Vue({
     this.$store.commit('ua/get')
     // 初始化全屏监听
     this.$store.dispatch('fullscreen/listen')
+  },
+  methods: {
+    setLanguage(type, res) {
+      const arr = res.data.map(item => { return { [item.code]: item[type] } })
+      const obj = {}
+      arr.forEach(item => {
+        Object.assign(obj, item)
+      })
+      this.$i18n.mergeLocaleMessage(type, { ...obj })
+    }
   },
   render: h => h(App)
 }).$mount('#app')

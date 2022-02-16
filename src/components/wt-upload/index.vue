@@ -25,7 +25,7 @@
 import files from '@/utils/files'
 import { addEnclosure, downloadEnclosure, delEnclosure } from '@/api/modules/common'
 export default {
-  name: '',
+  name: 'WtUpload',
   props: {
     fileList: {
       type: Array,
