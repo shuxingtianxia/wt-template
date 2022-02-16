@@ -1,6 +1,5 @@
 <template>
   <div class="supplier">
-    <wt-upload></wt-upload>
     <WtListView
       ref="wtListView"
       :show-search-toggle-btn="showSearchToggleBtn"

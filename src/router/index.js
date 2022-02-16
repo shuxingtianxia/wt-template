@@ -53,8 +53,14 @@ router.beforeEach(async(to, from, next) => {
   if (token && token !== 'undefined') {
     // 有token，并且跳的是登录页，直接切换到首页
     // 获取菜单权限
-    const hasRoutes = store.getters.routes && store.getters.routes.length
-    if (!hasRoutes) store.dispatch('menu/getMenu')
+    const hasRoutes = store.getters.asideRoutes && store.getters.asideRoutes.length
+    if (!hasRoutes) {
+      store.dispatch('menu/getMenu').then(res => {
+        res.forEach(item => {
+          router.addRoute(item)
+        })
+      })
+    }
     await store.dispatch('page/isLoaded')
     if (to.path === '/login') {
       next({ path: '/' })
@@ -99,11 +105,12 @@ router.afterEach((to, form, next) => {
 })
 
 router.onReady(() => {
-  router.addRoutes([{
+  router.addRoute({
     path: '*',
     name: '404',
+    redirect: '/404',
     component: (resolve) => require([`@/views/system/error/404`], resolve)
-  }])
+  })
 })
 
 export default router

@@ -2,6 +2,9 @@ import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
 import { login, logout, refeshToken } from '@/api/modules/user'
+/*
+  该页面主要处理用户方面，比如：登录，注册，清空用户信息，退出登录，刷新token
+*/
 
 export default {
   namespaced: true,

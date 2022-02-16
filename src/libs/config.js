@@ -25,7 +25,6 @@ export default {
   sso,
   //   env: Object.keys(domain).find(key => domain[key].includes(window.location.hostname)) || 'local'
   env: (function() {
-    console.log('domain[process.env.VUE_APP_DOMAIN]', domain[process.env.VUE_APP_DOMAIN || 'dev'])
     return domain[process.env.VUE_APP_DOMAIN || 'dev']
   }()),
   ssoUrl: (function() {
