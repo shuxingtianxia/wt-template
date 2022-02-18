@@ -12,7 +12,7 @@
     >
       <!-- 搜索内容 -->
       <div class="search-left-box">
-        <el-form-item v-for="field in formConfig" :key="field.key" :label="field.label">
+        <el-form-item v-for="field in formConfig" :key="field.key" :label="field.label" :rules="field.rules || []" :prop="field.key">
           <!--输入框-->
           <el-input
             v-if="field.type==='input'"
@@ -134,6 +134,23 @@ export default {
       'value'
     ])
   },
+  watch: {
+    formData: {
+      handler(val) {
+        this.$bus.$emit('handleFormData', val)
+      },
+      deep: true
+    },
+    searchData: {
+      handler(newVal, oldVal) {
+        console.log('newVal', newVal, oldVal)
+        if (JSON.stringify(newVal) === JSON.stringify(oldVal)) return
+        this.formData = { ...newVal }
+      },
+      immediate: false,
+      deep: true
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       const height = this.$refs.ruleForm.$el.clientHeight
@@ -162,8 +179,13 @@ export default {
     },
     // 点击查询
     handleSubmit1() {
-      this.handleSubmit()
-      this.searchMore = false
+      this.$refs.ruleForm.validate(valid => {
+        console.log('valid', valid)
+        if (valid) {
+          this.handleSubmit()
+          this.searchMore = false
+        }
+      })
     },
     // 重置
     resetForm() {

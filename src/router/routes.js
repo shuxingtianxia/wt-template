@@ -55,6 +55,26 @@ const frameIn = [
         name: 'PathConfigureAdd',
         hidden: true,
         meta: { title: 'route.systemManage', icon: 'dashboard', cache: true }
+      },
+      {
+        path: 'edit',
+        component: _import('path/edit'),
+        name: 'PathConfigureEdit',
+        meta: { title: '编辑', icon: 'dashboard', cache: true }
+      }
+    ]
+  },
+  {
+    path: '/language',
+    name: 'Language',
+    component: layoutHeaderAside,
+    meta: { title: '多语言', icon: 'dashboard' },
+    children: [
+      {
+        path: 'list',
+        component: _import('i18n'),
+        name: 'LanguageList',
+        meta: { title: '多语言', icon: 'dashboard', cache: true }
       }
     ]
   }

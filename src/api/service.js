@@ -99,8 +99,9 @@ function createRequestFunction(service) {
         'Content-Type': get(config, 'headers.Content-Type', 'application/json')
       },
       timeout: 5000,
-      baseURL: process.env.VUE_APP_API,
-      data: {}
+      baseURL: config.noEnvUrl ? '' : process.env.VUE_APP_API, // 不使用VUE_APP_API的路径，需要加noEnvUrl为true
+      data: {},
+      method: config.method || 'get'
     }
     return service(Object.assign(configDefault, config))
   }

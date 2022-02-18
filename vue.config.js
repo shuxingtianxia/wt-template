@@ -46,6 +46,16 @@ module.exports = {
           '^/service1': '/service1'
         },
         secure: false
+      },
+      '/i18n': {
+        target: 'http://192.168.47.94:8080', // 泽邦
+        changeOrigin: true,
+        timeout: 60000,
+        websocket: false,
+        pathRewrite: {
+          '^/i18n': '/i18n'
+        },
+        secure: false
       }
     }
   },

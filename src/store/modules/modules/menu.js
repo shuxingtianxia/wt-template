@@ -134,7 +134,6 @@ export default {
      * @description 设置侧边栏菜单
      */
     asideSet(state, menu) {
-      console.log('menu', menu)
       // store 赋值
       state.aside = menu
     },
