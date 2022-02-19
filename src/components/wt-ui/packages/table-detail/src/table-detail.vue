@@ -291,7 +291,7 @@ export default {
     },
     // 编辑
     editEvent() {
-      const selectRecords = this.getSelection()
+      let selectRecords = this.getSelection()
       if (!selectRecords.length) {
         this.$message({
           message: `请选择需要编辑的数据`,
