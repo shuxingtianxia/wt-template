@@ -291,13 +291,13 @@ export default {
     },
     // 编辑
     editEvent() {
-      let selectRecords = this.getSelection()
+      const selectRecords = this.getSelection()
       if (!selectRecords.length) {
         this.$message({
           message: `请选择需要编辑的数据`,
           type: 'error'
         })
-        return
+          return
       }
       // 激活编辑勾选的框？
       // 编辑出弹窗
