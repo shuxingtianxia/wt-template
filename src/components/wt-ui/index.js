@@ -1,7 +1,9 @@
 import Upload from './packages/upload/index'
+import TableDetail from './packages/table-detail/index'
 
 const components = [
-  Upload
+  Upload,
+  TableDetail
 ]
 
 const install = function(Vue, opts = {}) {
