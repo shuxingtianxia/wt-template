@@ -9,12 +9,11 @@
     "dev": "npm run serve",
     "build": "vue-cli-service build",
     "build:preview": "NODE_OPTIONS=--max_old_space_size=4096 vue-cli-service build --mode preview",
-    "lint": "vue-cli-service lint --fix",
+    "lint": "eslint ./ --ext .js,.vue,.ts",
     "lint:fix": "eslint ./ --ext .js,.vue,.ts --fix",
-    "test:unit": "vue-cli-service test:unit",
     "prepare": "husky install",
-    "postinstall": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "commitlint": "commitlint --config .commitlintrc.js -e -V"
   },
   "dependencies": {
     "@d2-projects/vue-table-import": "^1.0.1",
@@ -48,6 +47,8 @@
     "xe-utils": "^3.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
     "@d2-projects/vue-filename-injector": "^1.1.0",
     "@kazupon/vue-i18n-loader": "^0.5.0",
     "@vue/cli-plugin-babel": "^4.1.0",
@@ -81,7 +82,8 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
-    "post-commit": "git update-index --again"
+    "post-commit": "git update-index --again",
+    "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
