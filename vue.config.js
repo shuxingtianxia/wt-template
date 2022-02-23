@@ -41,11 +41,11 @@ module.exports = {
         // target: " http://192.168.47.70:30001", //s
         changeOrigin: true,
         timeout: 60000,
-        websocket: false,
+        ws: false, // 是否代理websockets
         pathRewrite: {
           '^/service1': '/service1'
         },
-        secure: false
+        secure: false // 如果是https接口，需要配置这个参数 是否验证SSL Certs
       },
       '/i18n': {
         target: 'http://192.168.47.94:8080', // 泽邦
