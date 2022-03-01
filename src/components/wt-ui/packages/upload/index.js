@@ -1,7 +1,7 @@
-import WtUpload from './src/upload'
+import WtUpload from './src/main'
 
 /* istanbul ignore next */
-WtUpload.install = function(Vue) {
+WtUpload.install = function install(Vue) {
   Vue.component(WtUpload.name, WtUpload)
 }
 

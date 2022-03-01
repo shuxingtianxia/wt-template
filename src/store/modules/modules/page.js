@@ -378,8 +378,8 @@ export default {
      */
     init(state, routes) {
       const pool = []
-      const push = function(routes) {
-        routes.forEach(route => {
+      const push = function(routeList) {
+        routeList.forEach(route => {
           if (route.children && route.children.length > 0) {
             push(route.children)
           } else {

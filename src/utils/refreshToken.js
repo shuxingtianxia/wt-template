@@ -31,7 +31,7 @@ class RefreshToken {
           message: 'token无效或过期，请重新登录！',
           type: 'error',
           duration: 3000,
-          onClose: function() {
+          onClose() {
             // if (vue.$ssoComeIn) { // 内部用户
             //   deleteCookiesDomain()
             //   window.location.replace(window._CONFIG['ssoURL'])

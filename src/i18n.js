@@ -11,9 +11,9 @@ function loadLocaleMessages() {
   for (const key of locale) {
     const matched = key.match(/([A-Za-z0-9-_]+)\./i)
     if (matched && matched.length > 1) {
-      const locale = matched[1]
+      const lang = matched[1]
       const localeElementUI = require(`element-ui/lib/locale/lang/${locales(key).default._element}`)
-      messages[locale] = {
+      messages[lang] = {
         ...locales(key).default,
         ...localeElementUI ? localeElementUI.default : {}
       }

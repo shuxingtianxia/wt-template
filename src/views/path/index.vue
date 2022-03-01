@@ -70,6 +70,8 @@ export default {
       toolbar
     }
   },
+  created() {
+  },
   methods: {
     // 编辑按钮
     edit(row) {

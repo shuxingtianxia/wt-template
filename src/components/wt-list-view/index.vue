@@ -60,6 +60,7 @@ export default {
     }
   },
   created() {
+    console.log('this', this)
     // 方便其他组件调用请求表格接口
     this.$bus.$on('getTableList', () => {
       this.$refs.basicTable.getTableList()

@@ -43,9 +43,9 @@ export default {
     },
     // 上传文件
     uploadFile() {
-      files.upload().then((files) => {
+      files.upload().then((fileList) => {
         const formData = new FormData()
-        files.forEach(file => {
+        fileList.forEach(file => {
           if (file.size > 0) {
             formData.append('attachType', 'DF')
             formData.append('files', file)

@@ -94,7 +94,7 @@ export function arrayUnique2(arr, name) {
   var hash = {}
   return arr.reduce(function(acc, cru, index) {
     if (!hash[cru[name]]) {
-      hash[cru[name]] = { index: index }
+      hash[cru[name]] = { index }
       acc.push(cru)
     } else {
       acc.splice(hash[cru[name]]['index'], 1, cru)

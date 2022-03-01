@@ -1,0 +1,142 @@
+@import './variable.scss';
+@import './mixins/mixins.scss';
+@import './mixins/button';
+
+$btnThemeList: (
+  (
+    name: "primary",
+    textColor: $wt-color-white,
+    textHoverColor: $wt-color-white,
+    btnBackground: $wt-primary-color,
+    btnBackgroundHover: $wt-primary-hover-color,
+    btnBackgroundClick: $wt-primary-click-color
+  ),
+  (
+    name: "info",
+    textColor: #606266,
+    textHoverColor: #606266,
+    btnBackground: $wt-info-color,
+    btnBackgroundHover: $wt-info-hover-color,
+    btnBackgroundClick: $wt-info-click-color
+  ),
+  (
+    name: "warning",
+    textColor: #fd9644,
+    textHoverColor: $wt-color-white,
+    btnBackground: $wt-warning-color,
+    btnBackgroundHover: $wt-warning-hover-color,
+    btnBackgroundClick: $wt-warning-click-color
+  ),
+  (
+    name: "danger",
+    textColor: #ff4858,
+    textHoverColor: $wt-color-white,
+    btnBackground: $wt-danger-color,
+    btnBackgroundHover: $wt-danger-hover-color,
+    btnBackgroundClick: $wt-danger-click-color
+  ),
+  (
+    name: "default",
+    textColor: #495060,
+    textHoverColor: #4880ff,
+    btnBackground: $wt-color-white,
+    btnBackgroundHover: $wt-default-hover-color,
+    btnBackgroundClick: $wt-default-click-color
+  )
+);
+
+@include blockquote(button) {
+  @include btnStatus($btnThemeList, default);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  color: $wt-font-color;
+  outline: 0;
+  font-size: $wt-font-size;
+  border: 1px solid $wt-button-border-color;
+  border-radius: 4px;
+  padding: 10px 20px;
+  white-space: nowrap;
+  user-select: none;
+  appearance: none;
+  cursor: pointer;
+  // 第二个按钮开始左边距10px 
+  & + & {
+    margin-left: 10px;
+  }
+
+  // 有图标的距离文字5px
+  & [class*="el-icon-"] {
+    & + span {
+      margin-left: 5px;
+    }
+  }
+
+  &--mini {
+    font-size: $wt-font-size-mini;
+    padding: 7px 15px;
+    border-radius: 3px;
+    
+  }
+
+  &.is-disabled,
+  &.is-disabled:hover,
+  &.is-disabled:focus {
+    border-color: transparent;
+  }
+
+  &:hover {
+    @include btnStatus($btnThemeList, hover);
+  }
+  &:active {
+    @include btnStatus($btnThemeList, click);
+  }
+
+  @include when(disabled) {
+    &,
+    &:hover,
+    &:focus {
+      color: $--button-disabled-font-color;
+      cursor: not-allowed;
+      background-image: none;
+      background-color: $wt-color-white;
+      border-color: $--button-disabled-border-color;
+    }
+
+    &.el-button--text {
+      background-color: transparent;
+    }
+  }
+  @include when(loading) {
+    position: relative;
+    pointer-events: none;
+
+    &:before {
+      pointer-events: none;
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      background-color: rgba(255,255,255,.35);
+    }
+  }
+
+  // 禁用
+  @include m(primary) {
+    @include button-variant($wt-color-white, $wt-primary-click-color, $wt-primary-click-color);
+  }
+  @include m(info) {
+    @include button-variant($wt-color-white, $wt-info-click-color, $wt-info-click-color);
+  }
+  @include m(warning) {
+    @include button-variant($wt-color-white, $wt-warning-click-color, $wt-warning-click-color);
+  }
+  @include m(danger) {
+    @include button-variant($wt-color-white, $wt-danger-click-color, $wt-danger-click-color);
+  }
+
+}

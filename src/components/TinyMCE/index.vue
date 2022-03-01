@@ -44,25 +44,25 @@ export default {
   mounted() {
     this.init()
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     window.tinymce.get(this.id).destroy()
   },
   methods: {
     init() {
       const radomId = window.radomId ? window.radomId + 1 : 1
       window.radomId = radomId
-      const _this = this
-      _this.status = 0
-      _this.id = 'editor-' + radomId
+      const that = this
+      that.status = 0
+      that.id = 'editor-' + radomId
       const setting =
         {
-          selector: '#' + _this.id,
+          selector: '#' + that.id,
           upload_image_url: '/upload/cloud', // 配置的上传图片的路由
           language_url: 'https://cdn.jsdelivr.net/gh/wt-sml/wutong_cdn/js/tinymce-lang-zh@5.2.2.js',
           language: 'zh_CN',
-          init_instance_callback: function(editor) {
+          init_instance_callback(editor) {
             editor.on('input change undo redo', () => {
-              _this.$emit('update:tinymceHtml', editor.getContent())
+              that.$emit('update:tinymceHtml', editor.getContent())
             })
           },
           // 编辑器的一些简单样式设置
@@ -138,12 +138,12 @@ export default {
             Webdings=webdings;
             Wingdings=wingdings,zapf dingbats`,
           // 图片上传
-          images_upload_handler: function(blobInfo, success, failure) {
-            if (blobInfo.blob().size > _this.maxSize) {
+          images_upload_handler(blobInfo, success, failure) {
+            if (blobInfo.blob().size > that.maxSize) {
               failure('图片大小不能超过10M') // 这个大小在上面maxSize可设置
             }
 
-            if (_this.accept.indexOf(blobInfo.blob().type) >= 0) {
+            if (that.accept.indexOf(blobInfo.blob().type) >= 0) {
               console.log(blobInfo.blob())
               const formData = new FormData()
               formData.append('file', blobInfo.blob(), blobInfo.filename())
@@ -172,7 +172,7 @@ export default {
             }
           }
         }
-      Object.assign(setting, _this.setting)
+      Object.assign(setting, that.setting)
       this.$nextTick(() => {
         window.tinymce.init(setting)
       })

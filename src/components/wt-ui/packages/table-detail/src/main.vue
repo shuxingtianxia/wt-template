@@ -122,7 +122,7 @@ export default {
     },
     option: {
       type: Object,
-      default: function() {
+      default() {
         return {
           loading: false,
           isEditModal: false,
@@ -314,7 +314,7 @@ export default {
     async validAllEvent() {
       let isPass = true
       const $table = this.$refs.xTable
-      const errMap = await $table.validate(true).catch(errMap => errMap)
+      const errMap = await $table.validate(true).catch(err => err)
       if (errMap) {
         this.$message({ type: 'error', message: this.$t('message_checkFailed') })
         isPass = false

@@ -1,4 +1,4 @@
-import TableDetail from './src/table-detail'
+import TableDetail from './src/main'
 
 /* istanbul ignore next */
 TableDetail.install = function(Vue) {

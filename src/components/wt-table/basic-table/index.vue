@@ -217,10 +217,10 @@ export default {
       },
       deep: true
     },
-    'pagination.currentPage': function(val) {
+    'pagination.currentPage'(val) {
       this.getTableList()
     },
-    'pagination.pageSize': function(val) {
+    'pagination.pageSize'(val) {
       this.pagination.currentPage = 1
       this.getTableList()
     },

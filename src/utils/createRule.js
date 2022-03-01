@@ -23,7 +23,7 @@ export function createdRules(data) {
     if (type === 'number' || type === 'string') {
       tempObj[attr] = [{ required: true, message: '不能为空' }]
     } else {
-      tempObj[attr] = [{ type: type, required: true, message: '不能为空', trigger: 'change' }]
+      tempObj[attr] = [{ type, required: true, message: '不能为空', trigger: 'change' }]
     }
   }
   return tempObj

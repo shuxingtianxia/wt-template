@@ -1,10 +1,11 @@
-const domain = { // TODO
+const domain = { // domain
   dev: 'http://srmgatewaydev.wingtech.com', // 开发环境
   qas: 'http://192.168.130.62:30101', // 测试环境
   uat: 'http://192.168.130.62:30201', // 用户环境
   prd: 'http://192.168.130.62:30301' // 正式
 }
-const sso = { // TODO
+
+const sso = { // SSO
   dev: 'http://ssodev.wingtech.com/', // 开发环境
   qas: 'http://ssoqas.wingtech.com/', // 测试环境
   uat: 'http://ssouat.wingtech.com/', // 用户环境

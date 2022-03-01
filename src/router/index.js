@@ -78,18 +78,16 @@ router.beforeEach(async(to, from, next) => {
         sessionStorage.removeItem('isSSO')
         store.dispatch('user/clearInfo')
       }
+    } else if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+      next()
     } else {
-      if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
-        next()
-      } else {
       //   // 否则全部重定向到登录页
-        next({
-          name: 'login',
-          query: {
-            redirect: to.fullPath
-          }
-        })
-      }
+      next({
+        name: 'login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
     }
     NProgress.done()
   }

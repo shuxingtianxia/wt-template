@@ -3,6 +3,92 @@ import setting from '@/setting.js'
 import { getMenuList } from '@/api/modules/user'
 import { cloneDeep } from 'lodash'
 import { frameInRoutes } from '@/router/routes'
+
+// 递归菜单
+function menuList(data) {
+  data.forEach(item => {
+    item.path = item.url
+    item.meta = {}
+    item.meta.title = item.chineseName
+    item.hidden = !item.isShowMenu
+    if (item.isOne) {
+      item.component = () => import(`@/layout/header-aside`)
+    } else if (item.componentPath) {
+      // item.component = (resolve) => require([`@/views${item.componentPath}`], resolve)
+      item.component = () => import(`@/views${item.componentPath}`)
+    } else {
+      item.component = () => import(`@components/common/RouterView`)
+    }
+    item.meta.cache = true
+    item.name = item.componentName
+    if (item.children.length) {
+      menuList(item.children)
+    }
+  })
+}
+
+/**
+ * 将子路由转换为扁平化路由数组（仅一级）
+ * @param {待转换的子路由数组} routes
+ * @param {父级路由路径} parentPath
+ */
+function castToFlatRoute(routes, parentPath, flatRoutes = []) {
+  for (const item of routes) {
+    if (item.children && item.children.length > 0) {
+      if (item.redirect && item.redirect !== 'noRedirect') {
+        flatRoutes.push({
+          name: item.name,
+          path: (parentPath + '/' + item.path).substring(1),
+          redirect: item.redirect,
+          meta: item.meta
+        })
+      }
+      castToFlatRoute(item.children, parentPath + '/' + item.path, flatRoutes)
+    } else {
+      flatRoutes.push({
+        name: item.name,
+        path: (parentPath + '/' + item.path).substring(1),
+        component: item.component,
+        meta: item.meta
+      })
+    }
+  }
+
+  return flatRoutes
+}
+
+/**
+ * 生成扁平化机构路由(仅两级结构)
+ * @param {允许访问的路由Tree} accessRoutes
+ * 路由基本机构:
+ * {
+ *   name: String,
+ *   path: String,
+ *   component: Component,
+ *   redirect: String,
+ *   children: [
+ *   ]
+ * }
+ */
+function generateFlatRoutes(accessRoutes) {
+  const flatRoutes = []
+  for (const item of accessRoutes) {
+    let childrenFflatRoutes = []
+    if (item.children && item.children.length > 0) {
+      childrenFflatRoutes = castToFlatRoute(item.children, '')
+    }
+
+    // 一级路由是布局路由,需要处理的只是其子路由数据
+    flatRoutes.push({
+      name: item.name,
+      path: item.path,
+      component: item.component,
+      redirect: item.redirect,
+      children: childrenFflatRoutes
+    })
+  }
+  return flatRoutes
+}
 /*
   该页面主要处理权限问题，例如：菜单权限
 */
@@ -151,88 +237,4 @@ export default {
     }
   }
 }
-// 递归菜单
-function menuList(data) {
-  data.forEach(item => {
-    item.path = item.url
-    item.meta = {}
-    item.meta.title = item.chineseName
-    item.hidden = !item.isShowMenu
-    if (item.isOne) {
-      item.component = () => import(`@/layout/header-aside`)
-    } else if (item.componentPath) {
-      // item.component = (resolve) => require([`@/views${item.componentPath}`], resolve)
-      item.component = () => import(`@/views${item.componentPath}`)
-    } else {
-      item.component = () => import(`@components/common/RouterView`)
-    }
-    item.meta.cache = true
-    item.name = item.componentName
-    if (item.children.length) {
-      menuList(item.children)
-    }
-  })
-}
 
-/**
- * 生成扁平化机构路由(仅两级结构)
- * @param {允许访问的路由Tree} accessRoutes
- * 路由基本机构:
- * {
- *   name: String,
- *   path: String,
- *   component: Component,
- *   redirect: String,
- *   children: [
- *   ]
- * }
- */
-function generateFlatRoutes(accessRoutes) {
-  const flatRoutes = []
-  for (const item of accessRoutes) {
-    let childrenFflatRoutes = []
-    if (item.children && item.children.length > 0) {
-      childrenFflatRoutes = castToFlatRoute(item.children, '')
-    }
-
-    // 一级路由是布局路由,需要处理的只是其子路由数据
-    flatRoutes.push({
-      name: item.name,
-      path: item.path,
-      component: item.component,
-      redirect: item.redirect,
-      children: childrenFflatRoutes
-    })
-  }
-  return flatRoutes
-}
-
-/**
- * 将子路由转换为扁平化路由数组（仅一级）
- * @param {待转换的子路由数组} routes
- * @param {父级路由路径} parentPath
- */
-function castToFlatRoute(routes, parentPath, flatRoutes = []) {
-  for (const item of routes) {
-    if (item.children && item.children.length > 0) {
-      if (item.redirect && item.redirect !== 'noRedirect') {
-        flatRoutes.push({
-          name: item.name,
-          path: (parentPath + '/' + item.path).substring(1),
-          redirect: item.redirect,
-          meta: item.meta
-        })
-      }
-      castToFlatRoute(item.children, parentPath + '/' + item.path, flatRoutes)
-    } else {
-      flatRoutes.push({
-        name: item.name,
-        path: (parentPath + '/' + item.path).substring(1),
-        component: item.component,
-        meta: item.meta
-      })
-    }
-  }
-
-  return flatRoutes
-}

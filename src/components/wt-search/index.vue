@@ -173,7 +173,7 @@ export default {
     })
   },
   methods: {
-    handleSubmit: function(e) {
+    handleSubmit(e) {
       const copySearch = this.getFormData()
       this.$emit('submit', copySearch)
     },
@@ -255,8 +255,8 @@ export default {
 
           // 跟subNames重名则不删除
           let sameName = false
-          for (let i = 0; i < subNames.length; i++) {
-            if (key === subNames[i]) {
+          for (let idx = 0; idx < subNames.length; idx++) {
+            if (key === subNames[idx]) {
               sameName = true
               break
             }

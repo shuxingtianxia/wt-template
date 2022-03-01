@@ -1,0 +1,60 @@
+// Mix 函数是将两种颜色根据一定的比例混合在一起，生成另一种颜色。其使用语法如下：
+// mix($color-1,$color-2,$weight);
+// mix(#f00, #00f) => #7f007f
+// mix(#f00, #00f, 25%) => #3f00bf
+// mix(rgba(255, 0, 0, 0.5), #00f) => rgba(63, 0, 191, 0.75)
+
+/*
+  $color: 文字颜色, $background-color： 背景颜色, $border-color：边框颜色
+*/
+@mixin button-variant($color, $background-color, $border-color) {
+  &.is-disabled {
+    color: $wt-color-white;
+    background-color: mix($background-color, $wt-color-white);
+    border-color: mix($border-color, $wt-color-white);
+  }
+}
+
+// 默认
+@mixin btnStatus($btnList, $type: default) {
+  @for $index from 0 to length($btnList) {
+    $item: nth($btnList, $index + 1);
+    $name: map-get($item, name);
+    $textColor: map-get($item, textColor);
+    $btnBackground: map-get($item, btnBackground);
+
+    $textHoverColor: map-get($item, textHoverColor);
+    $btnBackgroundHover: map-get($item, btnBackgroundHover);
+
+    $textHoverColor: map-get($item, textHoverColor);
+    $btnBackgroundClick: map-get($item, btnBackgroundClick);
+    @if $type == default {
+      &--#{$name} {
+        color: $textColor;
+        background-color: $btnBackground;
+        @if $name != default {
+          border: 1px solid $btnBackground;
+        }
+      }
+    } @else if $type == hover {
+      &.#{$blockName}--#{map-get($item, name)} {
+        color: $textHoverColor;
+        background: $btnBackgroundHover;
+        @if $name != default {
+          border: 1px solid $btnBackgroundHover;
+        }
+      }
+    } @else if $type == click {
+      &.#{$blockName}--#{map-get($item, name)} {
+        color: $textHoverColor;
+        background: $btnBackgroundClick;
+        @if $name == default {
+          border: 1px solid $textHoverColor;
+        } @else {
+          border: 1px solid $btnBackgroundClick;
+        }
+      }
+    }
+    
+  }
+}

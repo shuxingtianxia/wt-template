@@ -119,12 +119,12 @@ module.exports = {
     config
       // 开发环境 sourcemap 不包含列信息
       .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
+        configItem => configItem.devtool('cheap-source-map')
       )
       // 预览环境构建 vue-loader 添加 filename
       .when(
         process.env.VUE_APP_SCOURCE_LINK === 'TRUE',
-        config => VueFilenameInjector(config, {
+        configItem => VueFilenameInjector(configItem, {
           propName: process.env.VUE_APP_SOURCE_VIEWER_PROP_NAME
         })
       )

@@ -1,15 +1,20 @@
 import Upload from './packages/upload/index'
 import TableDetail from './packages/table-detail/index'
+import MessageBox from './packages/message-box/index'
+import Button from './packages/button/index'
 
 const components = [
   Upload,
-  TableDetail
+  TableDetail,
+  MessageBox,
+  Button
 ]
 
-const install = function(Vue, opts = {}) {
+const install = function install(Vue, opts = {}) {
   components.forEach(component => {
     Vue.component(component.name, component)
   })
+  Vue.prototype.$wtMsgbox = MessageBox
 }
 
 export default {

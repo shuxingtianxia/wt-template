@@ -47,6 +47,8 @@ export default {
     return {
     }
   },
+  created() {
+  },
   methods: {
     // 预览
     onPreview(id) {
@@ -54,9 +56,9 @@ export default {
     },
     // 上传文件
     uploadFile() {
-      files.upload().then((files) => {
+      files.upload().then(arr => {
         const formData = new FormData()
-        files.forEach(file => {
+        arr.forEach(file => {
           if (file.size > 0) {
             formData.append('attachType', this.attachType)
             formData.append('files', file)

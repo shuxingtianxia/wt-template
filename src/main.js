@@ -32,6 +32,7 @@ document.addEventListener('visibilitychange', () => {
   const whiteList = ['/login']
   const curPath = router.history.current.path
   const token = util.cookies.get('token')
+
   if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
     if (token && token !== 'undefined') refreshToken.beforeDestroy()
   }
@@ -49,7 +50,6 @@ import pluginImport from '@d2-projects/vue-table-import'
 Vue.use(pluginImport)
 // 获取多语言的接口
 import { getLanguage } from '@/api/modules/common'
-
 // 核心插件
 Vue.use(d2Admin)
 // 闻泰内部组件
@@ -101,6 +101,7 @@ new Vue({
     setLanguage(type, res) {
       const arr = res.data.map(item => { return { [item.code]: item[type] } })
       const obj = {}
+
       arr.forEach(item => {
         Object.assign(obj, item)
       })
