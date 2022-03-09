@@ -49,27 +49,27 @@ mock.onGet('/head/list').reply(200, {
   data: [
     {
       label: '收货地址',
-      value: 'toAddress'
+      prop: 'toAddress'
     },
     {
       label: '路径编号',
-      value: 'code'
+      prop: 'code'
     },
     {
       label: '起始国家',
-      value: 'fromCountry'
+      prop: 'fromCountry'
     },
     {
       label: '始发地',
-      value: 'fromCity'
+      prop: 'fromCity'
     },
     {
       label: '起运地地址',
-      value: 'fromAddress'
+      prop: 'fromAddress'
     },
     {
       label: '目的地',
-      value: 'toCity'
+      prop: 'toCity'
     }
   ]
 })

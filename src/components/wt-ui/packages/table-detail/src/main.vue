@@ -87,6 +87,7 @@
                 :disabled="item.renderPro.disabled"
                 :filterable="item.renderPro.filterable"
                 :collapse-tags="item.renderPro.tags"
+                v-bind="item.renderPro.otherConfig"
               >
                 <el-option
                   v-for="items in scope.row[item.renderPro.selectDataFiled]"
@@ -116,7 +117,7 @@ export default {
   },
   mixins: [fileMixin],
   props: {
-    data: {
+    data: { // 表格数据
       type: Array,
       default: () => []
     },
@@ -138,14 +139,6 @@ export default {
           tableOtherConfig: {} // 表格的其他配置，没有在props里的，都可以通过这里传
         }
       }
-    },
-    isOpenActiveCell: {
-      type: Boolean,
-      default: false
-    },
-    tableOtherConfig: { // 表格的其他配置，没有在props里的，都可以通过这里传
-      type: Object,
-      default: () => ({})
     },
     activeCellMethod: { // 是否允许编辑的方法
       type: Function,
@@ -363,7 +356,7 @@ export default {
       // 表格激活样式开启方式（表格选中并且激活一进页面就渲染）
       const excludeArr = ['seq', 'checkbox']
       // 允许编辑并且有editRender对象的
-      if (isPass && !!column.editRender && !excludeArr.includes(column.type) && this.isOpenActiveCell) {
+      if (isPass && !!column.editRender && !excludeArr.includes(column.type) && this.option.isOpenActiveCell) {
         return {
           '-webkit-box-shadow': 'inset 0 0 0 2px #409eff',
           'box-shadow': 'inset 0 0 0 2px #409eff'

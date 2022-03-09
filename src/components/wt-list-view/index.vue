@@ -9,7 +9,7 @@
       :show-search-toggle-btn="showSearchToggleBtn"
       @submit="searchSubmit"
     >
-      <slot slot="formButton" name="formSearch"></slot>
+      <slot slot="formButton" slot-scope="scope" :data="scope.data" name="formSearch"></slot>
     </wt-search>
     <BasicTable
       ref="basicTable"
@@ -27,13 +27,11 @@
 <script>
 import WtSearch from '@/components/wt-search'
 import BasicTable from '@/components/wt-table/basic-table'
-// import WtGird from '@/components/wt-table/wt-gird'
 export default {
   name: '',
   components: {
     WtSearch,
     BasicTable
-    // WtGird
   },
   props: {
     showSearchToggleBtn: { // 显示查看更多
@@ -78,16 +76,13 @@ export default {
       this.selectedList = records
       this.$emit('getSelectedList', this.selectedList)
     },
-    search() {
-      console.log('this.searchData', this.searchData)
-    },
     handleKeydown(field, e, value) {
       this.searchData[field.key] = value
     },
     handleBlur(field, e, value) {
       this.searchData[field.key] = value
     },
-    // 点击顶部的按钮
+    // 点击表格顶部的按钮
     handleClickBtn(type) {
       this.$emit('handleClickBtn', type)
     }

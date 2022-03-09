@@ -133,14 +133,14 @@
               v-bind="field.otherConfig"
             ></el-rate>
             <!-- 数字框 -->
-            <el-input-number
+            <!-- <el-input-number
               v-else-if="field.type==='input-number'"
               v-model="dataSource[field.prop]" :controls="false"
               :max="field.max" :min="field.min" :precision="field.precision"
               :style="{width: field.width || '100%'}"
               :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
               v-bind="field.otherConfig"
-            ></el-input-number>
+            ></el-input-number> -->
             <!-- 开关 -->
             <el-switch
               v-else-if="field.type==='switch'"
@@ -178,37 +178,11 @@
                 {{ item.text }}
               </el-checkbox>
             </el-checkbox-group>
-            <!-- 上传文件 -->
-            <el-upload
-              v-else-if="field.type==='upload'"
-              class="upload-demo"
-              :style="{width: field.width || '100%'}"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :http-request="httpRequest"
-              :before-upload="beforeUpload"
-              :on-remove="handleRemove"
-              :before-remove="beforeRemove"
-              multiple
-              :limit="field.limit"
-              :on-exceed="handleExceed"
-              :file-list="fileList[field.prop]"
-              v-bind="field.otherConfig"
-              :on-change="onChange"
-              :on-success="onSuccess"
-              :on-preview="onPreview"
-            >
-              <el-button size="small" type="primary"
-                         :disabled="disabled || field.disabled || (mode === 'edit' && field.editDisabled) || false"
-              >
-                点击上传
-              </el-button>
-              <div slot="tip" class="el-upload__tip">
-                <!-- 只能上传jpg/png文件，且不超过500kb -->
-              </div>
-            </el-upload>
-            <!-- 删除图片 -->
-            <wt-upload-picture v-else-if="field.type==='image'" :file-lists="dataSource[field.prop]" @onComplete="onCompleteImage" @handleRemove="handleRemoveImage"></wt-upload-picture>
+            <!-- 上传图片 -->
+            <wt-upload-picture v-else-if="field.type==='image'" :file-lists="dataSource[field.prop]" @onComplete="onComplete" @handleRemove="handleRemove"></wt-upload-picture>
+            <!-- 富文本 -->
             <vm-tinyMCE v-else-if="field.type==='rich'" :tinymce-html.sync="dataSource[field.prop]" :height="field.height"></vm-tinyMCE>
+            <!-- 上传文件 -->
             <!-- 自定义插槽 -->
             <slot
               v-else-if="!field.type"
@@ -253,10 +227,6 @@ export default {
     disabled: { // 设置整个表单是否禁用
       type: Boolean,
       default: false
-    },
-    fileList: { // 上传文件
-      type: Object,
-      default: () => ({})
     }
   },
   data() {
@@ -310,48 +280,17 @@ export default {
         callback(valid)
       })
     },
-    // 移除之前
-    beforeRemove(file) {
-      let flag = true
-      flag = this.$confirm('确定要移除该文件吗', '温馨提示', {
-        type: 'warning'
-      })
-      return flag
-    },
-    handleRemove(file) {
-      this.$emit('removeFile', file)
-    },
-    // 上传之前
-    beforeUpload(file) {
-      // 判断文件大小是不是有值
-      if (file.size === 0) return this.$message.warning('上传的文件不能为空')
-      // this.$emit('uploadFile', file)
-    },
-    // 文件上传
-    onChange(file, fileList) {
-      this.$emit('uploadFile', file)
-    },
-    onSuccess(response, file, fileList) {
-      console.log('response, file, fileList', response, file, fileList)
-    },
-    httpRequest() {
-    },
-    onPreview(file) {
-      this.$emit('onPreview', file)
-    },
-    handleExceed(file, fileList) {
-      return this.$message.warning('你已超过上限数量')
-    },
     // 点击按钮
     onFieldButtonClick(filed) {
 
     },
     // 删除图片
-    handleRemoveImage() {
-      this.form.articleImgUrl = ''
+    handleRemove(index, type) {
+      this.$emit('removeFile', index, type)
     },
-    onCompleteImage(url) {
-      this.form.articleImgUrl = url
+    // 图片上传成功
+    onComplete(url, type) {
+      this.$emit('onComplete', url, type)
     }
   }
 }

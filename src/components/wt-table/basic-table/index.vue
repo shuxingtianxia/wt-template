@@ -48,16 +48,16 @@
       :export-config="{}"
       keep-source
       :checkbox-config="{reserve: true}"
-      :mouse-config="{area: true, extension: true}"
       :keyboard-config="{isClip: true, isEdit: true, isTab: true, isArrow: true, isEnter: true, isDel: true, isMerge: true, isFNR: true, isChecked: true}"
       :edit-config="{trigger: 'dblclick', mode: 'cell', showStatus: true}"
       :menu-config="tableMenu"
-      v-bind="tableOptions"
+      v-bind="$attrs"
+      v-on="$listeners"
       @checkbox-change="checkboxChange"
       @checkbox-all="checkboxAll"
     >
-      <vxe-table-column v-if="otherConfig.checkbox" type="checkbox" width="60"></vxe-table-column>
-      <vxe-table-column v-if="otherConfig.radio" type="radio" width="60"></vxe-table-column>
+      <vxe-table-column v-if="selectType === 'checkbox'" type="checkbox" width="60"></vxe-table-column>
+      <vxe-table-column v-if="selectType === 'radio'" type="radio" width="60"></vxe-table-column>
       <vxe-table-column type="seq" width="40"></vxe-table-column>
       <vxe-table-column
         v-for="(item, index) in tableHeadList"
@@ -66,16 +66,12 @@
         :width="item.width || ''"
         :show-overflow="!item.overflow"
         :sortable="item.sortable"
-        :field="item.key"
+        :field="item.prop"
         :formatter="item.formatter"
         v-bind="item.options"
       >
-        <template v-if="options[item.key]" #header>
-          <vxe-select v-model="tableArgs[options[item.key].optionValue]" :options="options[item.key].list" :placeholder="options[item.key].placeholder" clearable transfer></vxe-select>
-        </template>
         <template v-if="item.slotName" #default="scope">
           <slot v-if="item.slotName" :data="{scope, name: item.slotName}" :name="isView ? 'slot1' : item.slotName"></slot>
-          <!-- <span v-else>{{ scope.row[item.key] }}</span> -->
         </template>
       </vxe-table-column>
     </vxe-table>
@@ -106,10 +102,6 @@ export default {
       type: Boolean,
       default: false
     },
-    tableOptions: { // 表格其他配置信息
-      type: Object,
-      default: () => ({})
-    },
     searchStr: { // 防止有的接口需要传的参数需要包裹起来，1. {a: '', pageNo: 1}    2. {valueMap: {a: ''}, pageNo: 1}
       type: String,
       default: ''
@@ -127,14 +119,9 @@ export default {
       require: true,
       default: () => ({})
     },
-    otherConfig: { // 其他配置
-      type: Object,
-      default: () => {
-        return {
-          radio: false,
-          checkbox: true
-        }
-      }
+    selectType: {
+      type: String,
+      default: 'checkbox'
     },
     dataType: { // 返回数据的data，因为接口返回的字段不统一，需要自己写
       type: String,
@@ -158,28 +145,37 @@ export default {
     // 配置图标
     toolbar: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        export: true,
+        custom: true,
+        print: true,
+        fullScreen: true
+      })
     },
     // 配置按钮
     barBtns: {
       type: Array,
       default: () => []
     },
-    options: {
-      type: Object,
-      default: () => ({})
-    },
     importObj: { // 导入需要传的数据
       type: Object,
       default: () => ({})
     },
-    time: { // 列表是不是需要添加默认时间
-      type: Boolean,
-      default: false
+    tableFn: { // 表格数据请求后需要的操作
+      type: Function,
+      default: null
+    },
+    tableHeaderFn: { // 表头数据请求后需要的操作
+      type: Function,
+      default: null
     },
     delStr: { // 删除需要校验的字段
       type: String,
       default: ''
+    },
+    delBeforeFn: { // 删除之前需要的操作
+      type: Function,
+      default: null
     },
     tableExport: { // 表格导出配置
       type: Object,
@@ -237,6 +233,9 @@ export default {
     if (this.requestHead) {
       this.getTableHeadList()
     }
+    setTimeout(() => {
+      console.log('this.$attrs', this.$attrs)
+    }, 500)
   },
   methods: {
     // 获取列表数据
@@ -253,24 +252,26 @@ export default {
       this.requestConfig.getTableData(params).then(res => {
         if (res.code === 200) {
           this.tableData = res.data[this.dataType] || []
-          if (this.time) {
-            this.tableData.forEach(item => {
-              item.time = item.confirmTime || Date.now()
-            })
-          }
+          if (this.tableFn) this.tableData = this.tableFn(this.tableData)
           this.pagination.totalItem = res.data[this.totalItem]
         }
       })
     },
     // 获取表头列表
     getTableHeadList() {
-      const arr = []
+      let arr = []
       this.requestConfig.getTableHeadData().then(res => {
         if (res.code === 200) {
-          this.tableConfig.forEach(item => {
-            const result = res.data.find(item1 => item1.value === item.key)
-            if (result) arr.push({ ...result, ...item })
-          })
+          // 如果前端没传，直接使用后端返回的
+          if (!this.tableConfig.length) return this.tableHeadList = res.data
+          if (this.tableHeaderFn) {
+            arr = this.tableHeaderFn(res.data)
+          } else {
+            this.tableConfig.forEach(item => {
+              const result = res.data.find(item1 => item1.prop === item.prop)
+              if (result) arr.push({ ...result, ...item })
+            })
+          }
           console.log('arr', arr)
           this.tableHeadList = arr
         }
@@ -289,7 +290,7 @@ export default {
         case 'downloadTemplate': // 下载本地模板
           files.downloadTemplate(item.fileUrl, item.fileName)
           break
-        case 'handleExport': // 批量删除
+        case 'handleExport': // 前端导出excel
           this.handleExport(item.fileName)
           break
         case 'batchDelete': // 批量删除
@@ -305,7 +306,7 @@ export default {
       this.$import.xlsx(file)
         .then(({ header, results }) => {
           console.log('header, results', header, results)
-          const labels = this.tableConfig.filter(item => item.slotName !== 'handle').map(item => item.label)
+          const labels = this.tableHeadList.filter(item => item.slotName !== 'handle').map(item => item.label)
           const headers = []
           // 去掉表头的左右空格
           header.forEach(item => headers.push(item.trim()))
@@ -316,7 +317,7 @@ export default {
           results.forEach((item, i) => {
             let obj = JSON.parse(JSON.stringify(this.importObj))
             header.forEach((item2, j) => {
-              obj = Object.assign(obj, { [this.tableConfig[j].key]: item[item2] })
+              obj = Object.assign(obj, { [this.tableHeadList[j].prop]: item[item2] })
             })
             arr.push(obj)
           })
@@ -340,13 +341,11 @@ export default {
         this.loading = true
         if (file.size > 0) {
           formData.append('file', file)
-          this.requestConfig['import'](formData, this.importObj).then((res) => {
+          this.requestConfig['import'](formData).then((res) => {
             this.loading = false
             if (res.code === 200) {
               this.$message.success('上传成功！')
               this.getTableList()
-            } else {
-              this.$message.error(res.messageCN)
             }
           }).finally(() => {
             this.loading = false
@@ -360,10 +359,10 @@ export default {
     // 前端导出excel列表
     handleExport(fileName) {
       const column = []
-      this.tableConfig.forEach(item => {
+      this.tableHeadList.forEach(item => {
         column.push({
           title: item.label,
-          dataIndex: item.key
+          dataIndex: item.prop
         })
       })
       const instance = new ElMapExportTable(
@@ -386,6 +385,10 @@ export default {
         const flag = this.selectedList.some(item => item[this.delStr] !== '' && item[this.delStr] !== undefined)
         if (flag) return this.$message.warning('该数据不能删除')
       }
+      // 删除前的函数调用
+      const flag = this.delBeforeFn && this.delBeforeFn(this.selectedList)
+      console.log('flag', flag)
+      if (flag) return
       // 预防有的不是根据id删除，需要传id的类型过来
       const ids = this.selectedList.map(item => item[idType || 'id'])
       this.$confirm(tip || '确定要删除选中的数据码？', '温馨提示', {

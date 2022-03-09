@@ -9,11 +9,13 @@
       :bar-btns="barBtns"
       :table-config="tableConfig"
       :request-config="requestConfig"
-      :toolbar="toolbar"
       :table-export="tableExport"
       data-type="content"
       total-item="totalElements"
       :import-obj="{orgType: 'S'}"
+      :request-head="true"
+      :area-config="{selectCellByHeader: false}"
+      :table-fn="tableFn"
       @handleClickBtn="handleClickBtn"
     >
       <template v-slot:fullName="{data}">
@@ -25,7 +27,7 @@
   </div>
 </template>
 <script>
-import { tableConfig, barBtns, formConfig, toolbar, tableExport } from './config/path'
+import { tableConfig, barBtns, formConfig, tableExport } from './config/path'
 import WtListView from '@/components/wt-list-view'
 import { getPathList, deleteBatch, importExcel, getPathHeadList } from '@/api/modules/configure/path'
 export default {
@@ -65,14 +67,18 @@ export default {
         import: importExcel,
         batchDelete: deleteBatch,
         getTableHeadData: getPathHeadList
-      },
-      // 图标配置
-      toolbar
+      }
     }
   },
   created() {
   },
   methods: {
+    tableFn(tableData) {
+      tableData.forEach((item, index) => {
+        item.code = index
+      })
+      return tableData
+    },
     // 编辑按钮
     edit(row) {
       this.dialog = true

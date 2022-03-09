@@ -13,7 +13,6 @@ export const fields = [
     label: '起始国家',
     span: 24,
     width: '280px',
-    slotName: 'fromFactoryId',
     rules: [{ required: true, message: '请选择起始国家', trigger: 'change' }]
   },
   {
@@ -26,7 +25,6 @@ export const fields = [
     otherConfig: {
       filterable: true
     },
-    slotName: 'toFactoryId',
     rules: [{ required: true, message: '请选择目的国', trigger: 'change' }]
   },
   {

@@ -1,44 +1,124 @@
 export const formConfig = [
   {
     type: 'input',
+    label: '路径编号111',
+    prop: 'code0',
+    placeholder: '路径编号查询',
+    tip: '你好'
+  },
+  {
+    type: 'input',
     label: '路径编号',
-    key: 'code',
+    prop: 'code1',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'date',
+    label: '时间',
+    prop: 'code2',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'daterange',
+    label: '时间区间',
+    prop: 'code3',
+    startField: 'startTime',
+    endField: 'endTime',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'datetime',
+    label: '时分秒',
+    prop: 'code4',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'input',
+    label: '路径编号',
+    prop: 'code1',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'date',
+    label: '时间',
+    prop: 'code2',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'daterange',
+    label: '时间区间',
+    prop: 'code3',
+    startField: 'startTime',
+    endField: 'endTime',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'datetime',
+    label: '时分秒',
+    prop: 'code4',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'input',
+    label: '路径编号',
+    prop: 'code1',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'date',
+    label: '时间',
+    prop: 'code2',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'daterange',
+    label: '时间区间',
+    prop: 'code3',
+    startField: 'startTime',
+    endField: 'endTime',
+    placeholder: '路径编号查询'
+  },
+  {
+    type: 'datetime',
+    label: '时分秒',
+    prop: 'code4',
     placeholder: '路径编号查询'
   }
+
 ]
 
 export const tableConfig = [
   {
     label: '路径编号',
-    key: 'code',
+    prop: 'code',
     width: 150
   },
   {
     label: '起始国家',
-    key: 'fromCountry',
+    prop: 'fromCountry',
     width: 150
   },
   {
     label: '始发地',
-    key: 'fromCity',
+    prop: 'fromCity',
     width: 150
   },
   {
     label: '起运地地址',
-    key: 'fromAddress'
+    prop: 'fromAddress'
   },
   {
     label: '目的国',
-    key: 'toCountry'
+    prop: 'toCountry'
   },
   {
     label: '目的地',
-    key: 'toCity',
+    prop: 'toCity',
     width: 100
   },
   {
     label: '收货地址',
-    key: 'toAddress'
+    prop: 'toAddress'
   }
 ]
 
@@ -52,7 +132,7 @@ export const barBtns = [
   {
     text: '导入模板',
     type: 'warning',
-    clickType: 'import',
+    clickType: 'tableImport',
     icon: 'fa-download'
   },
   {

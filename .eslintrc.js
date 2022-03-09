@@ -102,7 +102,7 @@ module.exports = {
     'no-proto': 2, // 禁止使用__proto__属性
     'no-redeclare': 2, // 禁止重复声明变量
     'no-regex-spaces': 2, // 禁止在正则表达式字面量中使用多个空格 /foo bar/
-    'no-return-assign': [2, 'except-parens'], // return 语句中不能有赋值表达式
+    // 'no-return-assign': [2, 'except-parens'], // return 语句中不能有赋值表达式
     'no-self-assign': 2,
     'no-self-compare': 2, // 不能比较自身
     'no-sequences': 2, // 禁止使用逗号运算符
