@@ -58,9 +58,9 @@
             >
               <el-option
                 v-for="op in options[field.prop] || []"
-                :key="op[field.value] || op.value"
-                :label="op[field.text] || op.text"
-                :value="op[field.value] || op.value"
+                :key="op[field.props.value] || op.value"
+                :label="op[field.props.label] || op.label"
+                :value="op[field.props.value] || op.value"
               ></el-option>
             </el-select>
             <!-- 日期选择器 时间+时分秒  /  时间  /   时间+时分秒+区间  /   时间+区间 -->
@@ -125,7 +125,7 @@ export default {
     },
     showLineNumber: {
       type: Number,
-      default: 1
+      default: 2
     },
     options: { // 下拉列表
       type: Object,
@@ -252,7 +252,7 @@ export default {
                 delete copySearch[fields[j].prop]
               }
             } else { // 开始时间和结束时间用逗号隔开
-              copySearch[fields[j].prop] = value.join(',')
+              copySearch[fields[j].prop] = [valStart, valEnd]
             }
           } else {
             copySearch[fields[j].prop] = Math.trunc(

@@ -2,7 +2,7 @@
   <div class="supplier">
     <WtListView
       ref="wtListView"
-      :show-search-toggle-btn="showSearchToggleBtn"
+      :options="options"
       search-str="valueMap"
       :search-data="searchData"
       :form-config="formConfig"
@@ -15,7 +15,9 @@
       :import-obj="{orgType: 'S'}"
       :request-head="true"
       :area-config="{selectCellByHeader: false}"
+      :del-before-fn="delBeforeFn"
       :table-fn="tableFn"
+      :table-header-fn="tableHeaderFn"
       @handleClickBtn="handleClickBtn"
     >
       <template v-slot:fullName="{data}">
@@ -37,19 +39,6 @@ export default {
   },
   data() {
     return {
-      dialog: false,
-      showSearchToggleBtn: true, // 查询按钮
-      row: { // 每一行数据
-        orgType: 'S',
-        code: '',
-        fullName: '',
-        address: '',
-        city: '',
-        email: '',
-        postCode: '',
-        contact: '',
-        tel: ''
-      },
       searchData: { // 查询参数
         orgType: 'S'
       },
@@ -67,17 +56,46 @@ export default {
         import: importExcel,
         batchDelete: deleteBatch,
         getTableHeadData: getPathHeadList
+      },
+      options: {
+        code1: [
+          {
+            text: '广东',
+            value: '440'
+          },
+          {
+            text: '湖南',
+            value: '550'
+          },
+          {
+            text: '江西',
+            value: '660'
+          }
+        ]
       }
     }
   },
   created() {
   },
   methods: {
+    // 表头数据操作
+    tableHeaderFn(headerData) {
+      headerData.forEach(item => {
+        this.$set(item, 'prop', item.value)
+      })
+      return headerData
+    },
+    // 前端接收接口的数据后操作
     tableFn(tableData) {
       tableData.forEach((item, index) => {
         item.code = index
       })
       return tableData
+    },
+    // 删除前操作
+    delBeforeFn(selectedList) {
+      const flag = selectedList.every(item => item.code === 0 && item && item.fromFactoryCode === 'V1500')
+      return flag
     },
     // 编辑按钮
     edit(row) {

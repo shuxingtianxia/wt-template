@@ -19,7 +19,6 @@
       :edit-config="editConfig"
       :edit-rules="option.editRules || {}"
       :span-method="mergeRowMethod"
-      :mouse-config="{area: true, extension: true}"
       :keyboard-config="{ isClip: true }"
       :clip-config="clipConfig"
       v-bind="option.tableOtherConfig"
@@ -55,20 +54,23 @@
                 @click="uploadFile(row, rowIndex, item.renderPro.fileType(row, column, rowIndex) || '')"
               />
             </div>
-
-            <div :class="row.attachmentInfos && row.attachmentInfos.length > 0 ? 'download-link' : ''">
-              <!--解决附件栏部分部分只显示文字 -->
-              <el-link v-if="row.attachmentInfos && row.attachmentInfos[0]" @click="preview(row.attachmentInfos[0])">
-                {{ row.attachmentInfos[0].originalAddress }}
-              </el-link>
-              <span v-else>{{ renderFlieName(row[column.property]) }}</span>
-              <!-- 删除 -->
-              <i v-if="row.attachmentInfos && row.attachmentInfos.length > 0 && item.renderPro.showDelBtn && item.renderPro.showDelBtn(row, column)" class="el-icon-circle-close del-btn" @click="delFile(row)" />
-            </div>
-            <!-- 下载 -->
-            <div>
-              <i v-if="row.attachmentInfos && row.attachmentInfos.length > 0 && item.renderPro.showDownloadBtn && item.renderPro.showDownloadBtn(row, column)" style="padding-left: 10px;cursor:pointer;" class="el-icon-download " @click="download(row.attachmentInfos[0])" />
-            </div>
+            <template v-if="row.attachmentInfos && row.attachmentInfos.length">
+              <div v-for="(file, index) in row.attachmentInfos" :key="index" class="file-item">
+                <div :class="row.attachmentInfos && row.attachmentInfos.length > 0 ? 'download-link' : ''">
+                  <!--解决附件栏部分部分只显示文字 -->
+                  <el-link @click="preview(file.id)">
+                    {{ file.originalAddress }}
+                  </el-link>
+                  <!-- <span v-else>{{ renderFlieName(row[column.property]) }}</span> -->
+                  <!-- 删除 -->
+                  <i v-if="item.renderPro.showDelBtn && item.renderPro.showDelBtn(row, column)" class="el-icon-circle-close del-btn" @click="removeFile(row, file, index)" />
+                </div>
+                <!-- 下载 -->
+                <div>
+                  <i v-if="item.renderPro.showDownloadBtn && item.renderPro.showDownloadBtn(row, column)" style="padding-left: 10px;cursor:pointer;" class="el-icon-download " @click="download(file)" />
+                </div>
+              </div>
+            </template>
           </div>
         </template>
         <!--  -->
@@ -127,7 +129,7 @@ export default {
         return {
           loading: false,
           isEditModal: false,
-          isOpenActiveCell: true, // 是否开启激活样式
+          isOpenActiveCell: false, // 是否开启激活样式
           isHideCheckbox: false, // 是否隐藏选择框
           isHideSeq: false, // 是否隐藏数字列
           cellStyle: () => null,
@@ -184,13 +186,13 @@ export default {
           clickType: 'del',
           isShow: true
         },
-        {
-          text: '编辑',
-          prop: 'btn_edit',
-          icon: 'fa fa-edit',
-          clickType: 'edit',
-          isShow: true
-        },
+        // {
+        //   text: '编辑',
+        //   prop: 'btn_edit',
+        //   icon: 'fa fa-edit',
+        //   clickType: 'edit',
+        //   isShow: true
+        // },
         {
           text: '保存',
           prop: 'btn_save',
@@ -211,7 +213,6 @@ export default {
     }
   },
   created() {
-    console.log('ttt', this.option)
   },
   // watch
   methods: {
@@ -241,7 +242,6 @@ export default {
       return filedType
     },
     checkboxChange(e) {
-      console.log('e, e.selection', e, e.selection)
       this.$emit('handleEvent', 'checkboxChange', e.selection, e)
     },
     selectAllEvent(e) {
@@ -251,9 +251,14 @@ export default {
     hideBtn(showArr) {
       this.defaultBtnOption = this.defaultBtnOption.filter(item => !showArr.includes(item.prop))
     },
+    // 获取选中的值
     getSelection() {
       const $table = this.$refs.xTable
       const selectRecords = $table.getCheckboxRecords()
+      if (!selectRecords.length) {
+        this.$message.error('请选择需要操作的数据')
+        return false
+      }
       return selectRecords
     },
     // 按钮方法集合
@@ -274,10 +279,7 @@ export default {
         })
         return
       }
-      this.$prompt(this.$t('message_deleteSelected')).then(type => {
-        $table.removeCheckboxRow()
-        this.$emit('handleEvent', 'del', selectRecords)
-      })
+      $table.removeCheckboxRow()
     },
     setIsActive(isActiveCell) {
       this.isActiveCells.push(isActiveCell)
@@ -301,7 +303,7 @@ export default {
       const isPass = this.validAllEvent()
       if (isPass) {
         const selectRecords = this.getSelection()
-        this.$emit('handleEvent', 'save', selectRecords)
+        selectRecords && this.$emit('handleEvent', 'save', selectRecords)
       }
     },
     async validAllEvent() {
@@ -309,10 +311,10 @@ export default {
       const $table = this.$refs.xTable
       const errMap = await $table.validate(true).catch(err => err)
       if (errMap) {
-        this.$message({ type: 'error', message: this.$t('message_checkFailed') })
+        // this.$message({ type: 'error', message: this.$t('message_checkFailed') })
         isPass = false
       } else {
-        this.$message({ type: 'success', message: this.$t('message_checkSuccess') })
+        // this.$message({ type: 'success', message: this.$t('保存成功') })
         isPass = true
       }
       return isPass
@@ -365,7 +367,6 @@ export default {
 
       return {}
     },
-    //
     // 隐藏列方法
     // hideColumns隐藏列名的集合
     hideColumn(hideColumns = []) {
@@ -421,9 +422,7 @@ export default {
         label.push(arr.find(option => item === option[props.value])[props.label])
       })
       return label.join(', ')
-    },
-
-    filterMethod() {}
+    }
   }
 }
 </script>
@@ -432,7 +431,8 @@ export default {
   .file-container {
     display: flex;
     align-items: center;
-    padding-top: 10px
+    padding-top: 10px;
+    flex-wrap: wrap;
   }
   .download-link {
     border: 1px dashed #ccc;
@@ -447,5 +447,10 @@ export default {
     vertical-align: middle;
     font-size: 16px;
     top: -10px
+  }
+  .file-item {
+    display: flex;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
 </style>

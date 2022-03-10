@@ -1,5 +1,5 @@
 <template>
-  <div class="wt-button" :class="isShowBorder ? 'border' : ''">
+  <div class="container" :class="isShowBorder ? 'border' : ''">
     <template v-for="(item, index) in buttonArr">
       <el-button v-if="!item.slotName && (item.code ? hasButtonPermission(item.code) : true)" :key="index" class="wt-button-item" :type="item.type" :icon="item.icon" :loading="btnLoading" :disabled="item.disabled" @click="handleClick(item.clickType)">
         {{ item.text }}
@@ -50,7 +50,7 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-.wt-button {
+.container {
   margin: 5px 0;
 }
 .border {

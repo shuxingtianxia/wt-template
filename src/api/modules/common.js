@@ -74,6 +74,7 @@ export function downloadEnclosure(params) {
   return request({
     url: '/attach/download',
     method: 'get',
+    responseType: 'blob',
     params
   })
 }

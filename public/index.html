@@ -15,7 +15,7 @@
     <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
     <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="preload" as="script">
     <% } %>
-    <script src="./static/tinymce/index.js"></script>
+    <script src="https://cdn.bootcss.com/tinymce/4.7.13/tinymce.min.js"></script>
     <title><%= VUE_APP_TITLE %></title>
     <style>
       html, body, #app { height: 100%; margin: 0px; padding: 0px; width: 100%; }

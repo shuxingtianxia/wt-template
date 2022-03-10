@@ -2,35 +2,97 @@ export const fields = [
   {
     type: 'input',
     prop: 'code',
-    label: '路径编号',
-    span: 24,
+    label: '输入框',
     width: '280px',
-    rules: [{ required: true, message: '请输入路径编号', trigger: 'blur' }],
+    rules: [{ required: true, message: '输入框', trigger: 'blur' }],
     editDisabled: true
   },
   {
+    type: 'textarea',
     prop: 'fromFactoryId',
-    label: '起始国家',
-    span: 24,
+    label: '多行输入框',
     width: '280px',
-    rules: [{ required: true, message: '请选择起始国家', trigger: 'change' }]
+    rules: [{ required: true, message: '多行输入框', trigger: 'change' }]
   },
   {
-    prop: 'toFactoryId',
-    label: '目的国',
-    span: 24,
-    width: '280px',
-    value: 'id',
-    text: 'address',
-    otherConfig: {
-      filterable: true
-    },
-    rules: [{ required: true, message: '请选择目的国', trigger: 'change' }]
+    type: 'number',
+    prop: 'number',
+    label: '数字框',
+    width: '280px'
   },
   {
     type: 'integer',
-    label: '数字',
+    label: '整数',
     prop: 'num'
+  },
+  {
+    type: 'float',
+    label: '浮点数',
+    prop: 'float'
+  },
+  {
+    type: 'button',
+    label: '按钮'
+  },
+  {
+    type: 'select',
+    label: '选择器',
+    prop: 'select',
+    props: {
+      label: 'label',
+      value: 'value'
+    }
+  },
+  {
+    type: 'date',
+    label: '时间',
+    prop: 'code2',
+    placeholder: '时间'
+  },
+  {
+    type: 'daterange',
+    label: '时间区间',
+    prop: 'code3',
+    startField: 'startTime',
+    endField: 'endTime',
+    placeholder: '时间区间'
+  },
+  {
+    type: 'datetime',
+    label: '时分秒',
+    prop: 'code4',
+    placeholder: '时分秒'
+  },
+  {
+    type: 'datetimerange',
+    label: '时间时分秒',
+    prop: 'code5',
+    placeholder: '时间时分秒'
+  },
+  {
+    type: 'rate',
+    label: '评分',
+    prop: 'rate'
+  },
+  {
+    type: 'switch',
+    label: '开关',
+    prop: 'switch'
+  },
+  {
+    type: 'slider',
+    label: '滑块',
+    prop: 'slider'
+  },
+  {
+    type: 'radio',
+    label: '单选框',
+    prop: 'radio'
+  },
+  {
+    type: 'checkbox',
+    label: '多选框',
+    prop: 'checkbox'
   },
   {
     type: 'rich',
@@ -39,9 +101,14 @@ export const fields = [
     span: 24
   },
   {
-    type: 'image',
-    label: '富文本1',
-    prop: 'detail1',
+    type: 'file',
+    label: '文件',
+    prop: 'file1',
+    span: 24
+  },
+  {
+    label: '插槽',
+    prop: 'fromFactoryId',
     span: 24
   }
 ]

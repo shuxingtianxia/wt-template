@@ -169,10 +169,6 @@ export default {
       type: Function,
       default: null
     },
-    delStr: { // 删除需要校验的字段
-      type: String,
-      default: ''
-    },
     delBeforeFn: { // 删除之前需要的操作
       type: Function,
       default: null
@@ -263,16 +259,16 @@ export default {
       this.requestConfig.getTableHeadData().then(res => {
         if (res.code === 200) {
           // 如果前端没传，直接使用后端返回的
-          if (!this.tableConfig.length) return this.tableHeadList = res.data
           if (this.tableHeaderFn) {
             arr = this.tableHeaderFn(res.data)
+          } else if (!this.tableConfig.length) {
+            return this.tableHeadList = res.data
           } else {
             this.tableConfig.forEach(item => {
               const result = res.data.find(item1 => item1.prop === item.prop)
               if (result) arr.push({ ...result, ...item })
             })
           }
-          console.log('arr', arr)
           this.tableHeadList = arr
         }
       })
@@ -301,7 +297,7 @@ export default {
           break
       }
     },
-    // 导入模板,使用批量新增
+    // 前端导入模板,使用批量新增
     handleUpload(file) {
       this.$import.xlsx(file)
         .then(({ header, results }) => {
@@ -323,12 +319,14 @@ export default {
           })
           // 数组对象去重，取重复的最后一条
           arr = arrayUnique2(arr, 'code')
-          this.requestConfig['importBtnData'](arr).then(res => {
-            if (res.code === 200) {
-              this.getTableList()
-              this.$message.success('上传成功')
-            }
-          })
+          this.tableData = [...this.tableData, ...arr]
+          console.log('arr', arr)
+          // this.requestConfig['importBtnData'](arr).then(res => {
+          //   if (res.code === 200) {
+          //     this.getTableList()
+          //     this.$message.success('上传成功')
+          //   }
+          // })
           // this.tableData = results
         })
       return false
@@ -378,16 +376,9 @@ export default {
     },
     // 批量删除
     batchDelete(tip, idType) {
-      console.log('this.selectedList', this.selectedList)
       if (!this.selectedList.length) return this.$message.warning('请选择你要删除的数据')
-      // 预防有的时候需要校验不包含这些才能删除
-      if (this.delStr) {
-        const flag = this.selectedList.some(item => item[this.delStr] !== '' && item[this.delStr] !== undefined)
-        if (flag) return this.$message.warning('该数据不能删除')
-      }
       // 删除前的函数调用
       const flag = this.delBeforeFn && this.delBeforeFn(this.selectedList)
-      console.log('flag', flag)
       if (flag) return
       // 预防有的不是根据id删除，需要传id的类型过来
       const ids = this.selectedList.map(item => item[idType || 'id'])

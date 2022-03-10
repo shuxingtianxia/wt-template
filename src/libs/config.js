@@ -1,8 +1,8 @@
 const domain = { // domain
   dev: 'http://srmgatewaydev.wingtech.com', // 开发环境
-  qas: 'http://192.168.130.62:30101', // 测试环境
-  uat: 'http://192.168.130.62:30201', // 用户环境
-  prd: 'http://192.168.130.62:30301' // 正式
+  qas: 'http://srmgatewayqas.wingtech.com', // 测试环境
+  uat: 'http://srmgatewayuat.wingtech.com', // 用户环境
+  prd: 'http://srmgateway.wingtech.com' // 正式
 }
 
 const sso = { // SSO

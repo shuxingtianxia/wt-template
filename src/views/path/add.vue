@@ -54,10 +54,37 @@ export default {
         }
       ],
       // 下拉列表
-      options: {},
+      options: {
+        radio: [{ label: '广东', value: 440 }, { label: '广西', value: 550 }],
+        checkbox: [{ label: '广东', value: 440 }, { label: '广西', value: 550 }],
+        select: [{ label: '广东', value: 440 }, { label: '广西', value: 550 }],
+        fromFactoryId: [{ country: '广东', city: '深圳' }, { country: '江西', city: '赣州' }]
+      },
       fields,
       dataSource: {
-        detail: ''
+        detail: '',
+        checkbox: [],
+        file1: [{
+          attachAddress: '/srm/tempFiles_dev',
+          createdBy: '',
+          fileSize: 12742,
+          id: '951424661443784704',
+          originalAddress: '文件1.xlsx',
+          suffix: 'xlsx',
+          title: '951424661346910208.xlsx',
+          type: 'DF',
+          updatedBy: ''
+        }, {
+          attachAddress: '/srm/tempFiles_dev',
+          createdBy: '',
+          fileSize: 12742,
+          id: '951424661443784704',
+          originalAddress: '文件2.xlsx',
+          suffix: 'xlsx',
+          title: '951424661346910208.xlsx',
+          type: 'DF',
+          updatedBy: ''
+        }]
       },
       fromCity: '',
       formAddress: '',
@@ -81,11 +108,11 @@ export default {
     getFactory() {
       getFactoryAll({}).then(res => {
         if (res.code === 200) {
-          this.options = {
+          this.options = { ...this.options, ...{
             old: res.data,
             fromFactoryId: res.data,
             toFactoryId: res.data
-          }
+          }}
         }
       })
     },

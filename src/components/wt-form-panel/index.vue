@@ -91,7 +91,7 @@
               v-bind="field.otherConfig"
               @click="onFieldButtonClick(field)"
             >
-              {{ field.text }}
+              {{ field.label }}
             </el-button>
             <!-- 选择框 -->
             <!-- <span v-else-if="field.type==='select'"> {{ options.carrierId }}</span> -->
@@ -107,15 +107,15 @@
             >
               <el-option
                 v-for="item in options[field.prop]"
-                :key="item[field.value] || item.itemValue"
-                :label="item[field.text] || item.description"
-                :value="item[field.value] || item.itemValue"
+                :key="item[field.props.value] || item.itemValue"
+                :label="item[field.props.label] || item.description"
+                :value="item[field.props.value] || item.itemValue"
               >
               </el-option>
             </el-select>
             <!-- 日期选择器 -->
             <el-date-picker
-              v-else-if="field.type==='datetime'||field.type==='date'||field.type==='time'"
+              v-else-if="field.type==='datetime'||field.type==='date'||field.type==='datetimerange'||field.type==='daterange'"
               v-model="dataSource[field.prop]"
               :style="{width:'100%'}"
               placeholder="请选择"
@@ -164,7 +164,7 @@
               v-bind="field.otherConfig"
             >
               <el-radio v-for="item in options[field.prop]" :key="item.value" :label="item.value">
-                {{ item.text }}
+                {{ item.label }}
               </el-radio>
             </el-radio-group>
             <!-- 多选框 -->
@@ -175,14 +175,15 @@
               v-bind="field.otherConfig"
             >
               <el-checkbox v-for="item in options[field.prop]" :key="item.value" :label="item.value">
-                {{ item.text }}
+                {{ item.label }}
               </el-checkbox>
             </el-checkbox-group>
             <!-- 上传图片 -->
             <wt-upload-picture v-else-if="field.type==='image'" :file-lists="dataSource[field.prop]" @onComplete="onComplete" @handleRemove="handleRemove"></wt-upload-picture>
+            <!-- 上传文件 -->
+            <wt-upload v-else-if="field.type==='file'" :file-list.sync="dataSource[field.prop]" :attach-type="field.attachType" :flag-type="field.flagType"></wt-upload>
             <!-- 富文本 -->
             <vm-tinyMCE v-else-if="field.type==='rich'" :tinymce-html.sync="dataSource[field.prop]" :height="field.height"></vm-tinyMCE>
-            <!-- 上传文件 -->
             <!-- 自定义插槽 -->
             <slot
               v-else-if="!field.type"
@@ -201,11 +202,11 @@
   </div>
 </template>
 <script>
-import wtUploadPicture from '@/components/wt-upload-picture'
+import WtUploadPicture from '@/components/wt-upload-picture'
 export default {
   name: '',
   components: {
-    wtUploadPicture
+    WtUploadPicture
   },
   props: {
     mode: { // 查看方式

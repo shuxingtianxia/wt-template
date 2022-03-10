@@ -12,7 +12,9 @@
         {{ slotData.rowIndex }}
       </template>
       <template v-slot:creator>
-        你好
+        <el-button @click="handleClick">
+          按钮
+        </el-button>
       </template>
       <!-- 不使用按钮 -->
       <!-- <div slot="btn" /> -->
@@ -29,7 +31,7 @@
 <script>
 
 export default {
-  name: 'A',
+  name: 'AAA',
   data() {
     const nameValid = ({ cellValue }) => {
       // 模拟服务端校验
@@ -129,7 +131,7 @@ export default {
       },
 
       option: {
-        isOpenActiveCell: true,
+        isOpenActiveCell: false,
         // 需要合并的字段
         mergefields: ['name'],
         mergeFileFields: ['attachmentInfos'],
@@ -137,7 +139,6 @@ export default {
           name: [
             { required: true, message: '请输入名字' },
             { validator: nameValid }
-            // { }
           ]
         },
         column: [
@@ -149,11 +150,10 @@ export default {
           { prop: 'attachmentInfos', label: '问题描述文件', width: '700',
             renderPro: {
               name: 'file',
-              fileType: (row, column, rowIndex) => { console.log('rrr', row, rowIndex, column); return 'ACF' }, // 后台规定的业务类型
+              fileType: (row, column, rowIndex) => { return 'ACF' }, // 后台规定的业务类型
               showUploadBtn: (row, column) => true,
               showDelBtn: (row, column) => true,
               showDownloadBtn: (row, column) => {
-                console.log('row', row, column)
                 return true
               } }
           },
@@ -181,33 +181,41 @@ export default {
   },
   mounted() {
     this.data = [
-      { name: '陈', age: 12, bugName: 'test', id: 1, status: 'new', attachmentInfos: [],
-        // attachmentInfos: [
-        //   {
-        //     'id': '1471362720712822784',
-        //     'type': 'ACF',
-        //     'title': '1471362720694538240.csv',
-        //     'suffix': 'csv',
-        //     'fileSize': 1727,
-        //     'originalAddress': '回复交期 (7).csv',
-        //     'attachAddress': '/srm/tempFiles_uat',
-        //     'relatedTable': 'srm_organize_authentication',
-        //     'relatedTableId': '1471362967799271424',
-        //     'createdTime': 1639635167055,
-        //     'updatedTime': 1639635240012,
-        //     'isUpload': 1
-        //   }
-        // ]
+      { name: '陈浩然', age: 12, bugName: 'test', id: 1, status: 'add',
+        attachmentInfos: [
+          {
+            attachAddress: '/srm/tempFiles_dev',
+            createdBy: '',
+            fileSize: 12742,
+            id: '951424661443784704',
+            originalAddress: '文件1.xlsx',
+            suffix: 'xlsx',
+            title: '951424661346910208.xlsx',
+            type: 'DF',
+            updatedBy: ''
+          },
+          {
+            attachAddress: '/srm/tempFiles_dev',
+            createdBy: '',
+            fileSize: 12742,
+            id: '951424661443784704',
+            originalAddress: '文件2.xlsx',
+            suffix: 'xlsx',
+            title: '951424661346910208.xlsx',
+            type: 'DF',
+            updatedBy: ''
+          }
+        ],
         rows: [{ label: '测试', value: 'test' }, { label: '优化', value: 'optimize' }]
       },
-      { name: '李', age: 18, id: 2, status: 'new', bugName: 'test5', bugdesc: '文件2', attachmentInfos: [], name1: '123' },
-      { name: '李', age: 18, id: 3, status: 'edit', bugName: 'test6', bugdesc: '文件2', attachmentInfos: [] },
-      { name: '李', age: 18, id: 4, status: 'edit', bugName: 'test7', bugdesc: '文件2', attachmentInfos: [] },
-      { name: '周', age: 18, id: 5, status: 'new', bugName: 'test7', bugdesc: '文件2', attachmentInfos: [] }
+      { name: '李浩然', age: 18, id: 2, status: 'add', bugName: 'test5', bugdesc: '文件2', attachmentInfos: [], name1: '123' },
+      { name: '李浩然', age: 18, id: 3, status: 'edit', bugName: 'test6', bugdesc: '文件2', attachmentInfos: [] },
+      { name: '李浩然', age: 18, id: 4, status: 'edit', bugName: 'test7', bugdesc: '文件2', attachmentInfos: [] },
+      { name: '周浩然', age: 18, id: 5, status: 'add', bugName: 'test7', bugdesc: '文件2', attachmentInfos: [] }
     ]
     // 控制表格禁用
     this.data.forEach(item => {
-      if (item.status === 'new') {
+      if (item.status === 'add') {
         ['name', 'bugName'].forEach(key => {
           this.$refs.wtTable.collectStyleCell(item.id, key)
         })
@@ -223,11 +231,11 @@ export default {
     this.option.column = column
 
     // 隐藏按钮
-    // this.$refs.wtTable.hideBtn(['btn_edit'])
+    this.$refs.wtTable.hideBtn(['btn_save'])
   },
   methods: {
-    a(scope) {
-      console.log('scope', scope)
+    handleClick() {
+      console.log('this.data', this.$refs.wtTable.$refs.xTable.getTableData())
     },
     handleEvent(type, selects) {
       console.log('type, selects', type, selects)

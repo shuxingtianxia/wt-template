@@ -36,8 +36,7 @@ mock.onPost('/route/list').reply(200, {
       { 'code': 'TEST005', 'fromCountry': '中国', 'updatedBy': '', 'toFactoryId': '875345199843246080', 'toCity': '嘉兴永瑞', 'fromFactoryCode': 'K160000', 'toAddress': '浙江省嘉兴市南湖区大桥镇亚中路777号3幢2号厂房3层', 'fromFactoryId': '875345200065544192', 'toCountry': '中国', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628740427000, 'fromAddress': '广东省惠州市大亚湾石化大道西38号星华工业园十栋四楼', 'id': '875346326039035904', 'toFactoryCode': 'V1500', 'fromCity': '广东惠州' },
       { 'code': 'TEST004', 'fromCountry': '中国', 'updatedBy': '', 'toFactoryId': '875345199889383424', 'toCity': '江苏无锡', 'fromFactoryCode': 'K160034', 'toAddress': '江苏省无锡市新吴区长江南路11号', 'fromFactoryId': '875345199998435328', 'toCountry': '中国', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628740427000, 'fromAddress': '广东省惠州市仲恺高新区陈江街道南华路80号', 'id': '875346326001287168', 'toFactoryCode': 'V2100', 'fromCity': '惠州仲恺' },
       { 'code': 'TEST002', 'fromCountry': '中国', 'updatedBy': '', 'toFactoryId': '875345199998435328', 'toCity': '惠州仲恺', 'fromFactoryCode': 'V2100', 'toAddress': '广东省惠州市仲恺高新区陈江街道南华路80号', 'fromFactoryId': '875345199889383424', 'toCountry': '中国', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628740427000, 'fromAddress': '江苏省无锡市新吴区长江南路11号', 'id': '875346325917401088', 'toFactoryCode': 'K160034', 'fromCity': '江苏无锡' },
-      { 'code': 'f123456', 'fromCountry': '中国', 'updatedBy': '', 'toFactoryId': '873215583443746816', 'toCity': 'asdad', 'fromFactoryCode': 'f123', 'toAddress': 'asdada', 'fromFactoryId': '874345428642955264', 'toCountry': '中国', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628557815000, 'fromAddress': '京东', 'id': '874580395172036608', 'toFactoryCode': 'sadasd', 'fromCity': '深圳' },
-      { 'code': 'T0002', 'updatedBy': '', 'toFactoryId': '873252266176413696', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628477119000, 'id': '874241934950924288', 'fromFactoryId': '872890905047072768' }
+      { 'code': 'f123456', 'fromCountry': '中国', 'updatedBy': '', 'toFactoryId': '873215583443746816', 'toCity': 'asdad', 'fromFactoryCode': 'f123', 'toAddress': 'asdada', 'fromFactoryId': '874345428642955264', 'toCountry': '中国', 'createdBy': 'TMS_TEST_02_测试2', 'createdTime': 1628557815000, 'fromAddress': '京东', 'id': '874580395172036608', 'toFactoryCode': 'sadasd', 'fromCity': '深圳' }
     ],
     'totalElements': 7
   }
@@ -49,27 +48,27 @@ mock.onGet('/head/list').reply(200, {
   data: [
     {
       label: '收货地址',
-      prop: 'toAddress'
+      value: 'toAddress'
     },
     {
       label: '路径编号',
-      prop: 'code'
+      value: 'code'
     },
     {
       label: '起始国家',
-      prop: 'fromCountry'
+      value: 'fromCountry'
     },
     {
       label: '始发地',
-      prop: 'fromCity'
+      value: 'fromCity'
     },
     {
       label: '起运地地址',
-      prop: 'fromAddress'
+      value: 'fromAddress'
     },
     {
       label: '目的地',
-      prop: 'toCity'
+      value: 'toCity'
     }
   ]
 })
