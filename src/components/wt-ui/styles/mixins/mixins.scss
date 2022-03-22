@@ -22,6 +22,7 @@ $namespace:'wt-';
   $selector: &;
   $currentSelector: "";
   @each $unit in $modifier {
+    // 当前选择器
     $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
   }
   @at-root {

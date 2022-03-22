@@ -1,5 +1,9 @@
 <template>
   <div class="supplier">
+    <!-- <wt-message></wt-message> -->
+    <el-button @click="handleBtn">
+      阿尼牛
+    </el-button>
     <WtListView
       ref="wtListView"
       :options="options"
@@ -76,8 +80,31 @@ export default {
     }
   },
   created() {
+    Promise.all(['a', 'b'].map(item => getPathList(item))).then(res => { console.log(res) })
+    // this.$wtMessage({
+    //   message: '你好',
+    //   type: 'primary',
+    //   duration: 1000
+    // })
+    // this.$wtMessage({
+    //   message: '你好',
+    //   type: 'primary',
+    //   duration: 1100
+    // })
   },
   methods: {
+    handleBtn() {
+      this.$wtMessage({
+        message: '你好',
+        assist: true,
+        type: 'warning',
+        duration: 1100
+      })
+      this.$message({
+        message: 'nihao',
+        duration: 1100
+      })
+    },
     // 表头数据操作
     tableHeaderFn(headerData) {
       headerData.forEach(item => {

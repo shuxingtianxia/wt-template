@@ -5,7 +5,8 @@ export const fields = [
     label: '输入框',
     width: '280px',
     rules: [{ required: true, message: '输入框', trigger: 'blur' }],
-    editDisabled: true
+    editDisabled: true,
+    tip: '提示语'
   },
   {
     type: 'textarea',

@@ -22,6 +22,13 @@
             :prop="field.prop || ''"
             :rules="field.rules || []"
           >
+            <!-- 自定义label -->
+            <template slot="label">
+              <span>{{ field.label }}</span>
+              <el-tooltip v-if="field.tip" class="item" effect="dark" :content="field.tip" placement="top-start">
+                <i class="el-icon-info"></i>
+              </el-tooltip>
+            </template>
             <!-- 文本框 -->
             <el-input
               v-if="field.type==='input' || field.type==='textarea'"
@@ -307,5 +314,8 @@ export default {
 .form-row {
   display: flex;
   flex-wrap: wrap;
+}
+::v-deep .el-tooltip {
+  color: #ff8d1a;
 }
 </style>

@@ -72,6 +72,7 @@ export default {
     doClose() {
       if (!this.visible) return
       this.visible = false
+      // 调用confirm / cancel函数
       this[this.action]()
     },
     close() {

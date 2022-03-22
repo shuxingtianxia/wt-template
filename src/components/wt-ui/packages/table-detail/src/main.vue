@@ -110,14 +110,12 @@
 </template>
 
 <script>
-import fileMixin from './fileMixin'
 import WtButton from '@/components/wt-button'
 export default {
   name: 'WtTableDetail',
   components: {
     WtButton
   },
-  mixins: [fileMixin],
   props: {
     data: { // 表格数据
       type: Array,
@@ -422,6 +420,14 @@ export default {
         label.push(arr.find(option => item === option[props.value])[props.label])
       })
       return label.join(', ')
+    },
+    // 上传成功之后
+    afterUploadFile(data, row, column, fileType) {
+      row.attachmentInfos.push(...data)
+    },
+    // 删除文件之后
+    afterRemoveFile(id, row, index) {
+      row.attachmentInfos.splice(index, 1)
     }
   }
 }
