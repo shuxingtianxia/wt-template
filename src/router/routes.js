@@ -27,13 +27,6 @@ const frameIn = [
           auth: true
         },
         component: _import('system/log')
-      },
-      // 刷新页面 必须保留
-      {
-        path: 'refresh',
-        name: 'refresh',
-        hidden: true,
-        component: _import('system/function/refresh')
       }
     ]
   },
@@ -88,7 +81,14 @@ const frameOut = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login/index')
+    component: () => _import('login/index')
+  },
+  // 刷新页面 必须保留
+  {
+    path: '/refresh',
+    name: 'refresh',
+    hidden: true,
+    component: _import('system/function/refresh')
   }
 ]
 
