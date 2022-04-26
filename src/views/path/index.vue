@@ -1,9 +1,9 @@
 <template>
   <div class="supplier">
     <!-- <wt-message></wt-message> -->
-    <el-button @click="handleBtn">
+    <wt-button type="danger" disabled @click="handleBtn">
       阿尼牛
-    </el-button>
+    </wt-button>
     <WtListView
       ref="wtListView"
       :options="options"
@@ -80,7 +80,6 @@ export default {
     }
   },
   created() {
-    Promise.all(['a', 'b'].map(item => getPathList(item))).then(res => { console.log(res) })
     // this.$wtMessage({
     //   message: '你好',
     //   type: 'primary',

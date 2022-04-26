@@ -12,7 +12,7 @@ function menuList(data) {
     item.meta.title = item.chineseName
     item.hidden = !item.isShowMenu
     if (item.isOne) {
-      item.component = () => import(`@/layout/header-aside`)
+      item.component = () => import(`@/layout`)
     } else if (item.componentPath) {
       // item.component = (resolve) => require([`@/views${item.componentPath}`], resolve)
       item.component = () => import(`@/views${item.componentPath}`)
