@@ -5,10 +5,10 @@ import App from './App'
 // 核心插件
 import d2Admin from '@/plugin/d2admin'
 // 闻泰内部组件
-import wtUi from '@/components/wt-ui'
+import WtUi from 'wingtech-ui'
+import 'wingtech-ui/lib/index.css'
 
-// 富文本组件
-import vmTinyMCE from '@/components/TinyMCE'
+import 'wingtech-ui/src/plugin'
 
 // store
 import store from '@/store/index'
@@ -53,10 +53,7 @@ import { getLanguage } from '@/api/modules/common'
 // 核心插件
 Vue.use(d2Admin)
 // 闻泰内部组件
-Vue.use(wtUi)
-
-// 富文本编辑器
-Vue.component('vm-tinyMCE', vmTinyMCE)
+Vue.use(WtUi)
 
 // 环境配置
 import config from '@/libs/config'

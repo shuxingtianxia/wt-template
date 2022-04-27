@@ -43,6 +43,7 @@
     "vxe-table": "3.0.3",
     "vxe-table-plugin-charts": "1.6.0",
     "vxe-table-plugin-menus": "2.0.1",
+    "wingtech-ui": "^0.2.8",
     "xe-clipboard": "^1.10.0",
     "xe-utils": "^3.3.0"
   },

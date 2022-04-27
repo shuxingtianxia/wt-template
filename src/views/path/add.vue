@@ -1,7 +1,7 @@
 <template>
   <div class="add-or-edit">
-    <WtButton :button-arr="buttonArr" :is-show-border="true" :btn-loading="btnLoading" @clickBtn="clickBtn"></WtButton>
-    <WtFormPanel ref="wtFormPanel" :data-source="dataSource" :options="options" :fields="fields" :mode="dataSource.id ? 'edit': 'add'">
+    <wt-button-mult :button-arr="buttonArr" :is-show-border="true" :btn-loading="btnLoading" @clickBtn="clickBtn"></wt-button-mult>
+    <wt-form-panel ref="wtFormPanel" :data-source="dataSource" :options="options" :fields="fields" :mode="dataSource.id ? 'edit': 'add'">
       <template v-slot:fromFactoryId>
         <el-select v-model="dataSource.fromFactoryId" filterable :filter-method="filterMethod" style="width: 280px" @change="handleChange($event, 'fromFactoryId')">
           <el-option v-for="item in options.fromFactoryId" :key="item.id" :value="item.id" :label="item.country">
@@ -20,21 +20,15 @@
         <span v-show="toCity" class="city">目的地：{{ toCity }}</span>
         <span v-show="toAddress" class="city">收货地址：{{ toAddress }}</span>
       </template>
-    </WtFormPanel>
+    </wt-form-panel>
   </div>
 </template>
 <script>
 import { fields } from './config/add'
-import WtButton from '@/components/wt-button'
-import WtFormPanel from '@/components/wt-form-panel'
 import { getFactoryAll } from '@/api/modules/configure/factory'
 import { clearData } from '@/utils/clearData'
 export default {
   name: 'PathConfigureAdd',
-  components: {
-    WtButton,
-    WtFormPanel
-  },
   data() {
     return {
       btnLoading: false, // 加载
@@ -44,13 +38,11 @@ export default {
           text: '保存',
           type: 'primary',
           clickType: 'add'
-          // code: 'path-save'
         },
         {
           icon: 'el-icon-plus',
           text: '返回',
           clickType: 'back'
-          // code: 'path-back'
         }
       ],
       // 下拉列表

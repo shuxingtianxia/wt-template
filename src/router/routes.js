@@ -81,7 +81,7 @@ const frameOut = [
   {
     path: '/login',
     name: 'login',
-    component: () => _import('login/index')
+    component: _import('login/index')
   },
   // 刷新页面 必须保留
   {

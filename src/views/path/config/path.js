@@ -141,7 +141,6 @@ export const tableExport = {
         text: data.fromCountry,
         hyperlink: 'http://www.baidu.com',
         tooltip: '百度'
-
       }
     }
   }

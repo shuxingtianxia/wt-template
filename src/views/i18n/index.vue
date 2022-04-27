@@ -1,6 +1,6 @@
 <template>
   <div class="supplier">
-    <WtListView
+    <wt-list-view
       ref="wtListView"
       :show-search-toggle-btn="showSearchToggleBtn"
       search-str="valueMap"
@@ -20,20 +20,18 @@
           获取资源key
         </el-button>
       </template>
-    </WtListView>
+    </wt-list-view>
     <Add ref="add" :form="form"></Add>
   </div>
 </template>
 <script>
 import { tableConfig, barBtns, formConfig, toolbar } from './config'
-import WtListView from '@/components/wt-list-view'
 import { getPathList, deleteBatch, importExcel } from '@/api/modules/configure/path'
 import { getResourcesKey } from '@/api/modules/i18n/i18n'
 import Add from './dialog/add.vue'
 export default {
   name: 'PathConfigureList',
   components: {
-    WtListView,
     Add
   },
   data() {

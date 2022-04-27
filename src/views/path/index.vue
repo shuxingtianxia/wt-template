@@ -4,7 +4,7 @@
     <wt-button type="danger" disabled @click="handleBtn">
       阿尼牛
     </wt-button>
-    <WtListView
+    <wt-list-view
       ref="wtListView"
       :options="options"
       search-str="valueMap"
@@ -17,7 +17,6 @@
       data-type="content"
       total-item="totalElements"
       :import-obj="{orgType: 'S'}"
-      :request-head="true"
       :area-config="{selectCellByHeader: false}"
       :del-before-fn="delBeforeFn"
       :table-fn="tableFn"
@@ -29,18 +28,14 @@
           {{ data.row.fullName }}
         </el-link>
       </template>
-    </WtListView>
+    </wt-list-view>
   </div>
 </template>
 <script>
 import { tableConfig, barBtns, formConfig, tableExport } from './config/path'
-import WtListView from '@/components/wt-list-view'
 import { getPathList, deleteBatch, importExcel, getPathHeadList } from '@/api/modules/configure/path'
 export default {
   name: 'PathConfigureList',
-  components: {
-    WtListView
-  },
   data() {
     return {
       searchData: { // 查询参数
