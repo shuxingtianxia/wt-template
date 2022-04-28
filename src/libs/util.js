@@ -1,4 +1,4 @@
-import cookies from './util.cookies'
+import cookies from 'wingtech-ui/src/utils/cookies'
 import db from './util.db'
 import log from './util.log'
 import i18n from '../i18n'

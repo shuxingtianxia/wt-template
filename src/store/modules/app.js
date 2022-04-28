@@ -1,8 +1,8 @@
-import cookies from '@/libs/util.cookies'
+import util from '@/libs/util'
 export default {
   namespaced: true,
   state: {
-    language: cookies.get('lang')
+    language: util.cookies.get('lang')
   },
   mutations: {
   }

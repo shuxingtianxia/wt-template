@@ -1,4 +1,4 @@
-import { getAction, postAction, postFileAction, getBlobProgress } from '@/api/axios'
+import { getAction, postAction, postFileAction, getBlobProgress } from '@/api'
 export default {
   getItemValue: (params) => getAction({ url: '/dictItem/getItemValue', params }), // 通过字典码查询字典值数据
   getMoreDictItems: (params) => getAction({ url: '/dictItem/getMoreDictItems', params }), // 一次性获取多个字典表的值

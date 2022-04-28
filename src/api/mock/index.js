@@ -1,4 +1,6 @@
-import { mock } from '@/api/service'
+import { serviceForMock } from 'wingtech-ui/src/api/service'
+import Adapter from 'axios-mock-adapter'
+const mock = new Adapter(serviceForMock)
 // 登录
 mock.onGet('/service1/tms-portal/user/login', { email: 'TMS_TEST_02', password: '123456' }).reply(200, {
   code: 200,

@@ -2,30 +2,16 @@
 import Vue from 'vue'
 import i18n from './i18n'
 import App from './App'
-// 核心插件
-import d2Admin from '@/plugin/d2admin'
-// 闻泰内部组件
-import WtUi from 'wingtech-ui'
-import 'wingtech-ui/lib/index.css'
-
-import 'wingtech-ui/src/plugin'
+// 引入公共的组件和工具
+import '@/plugin'
 
 // store
 import store from '@/store/index'
-import '@/plugin/utils'
-import '@/plugin/vxe-table'
 import refreshToken from './utils/refreshToken'
 // 监听滚动事件和滑动事件
 refreshToken.setRefreshToken()
 // 菜单和路由设置
 import router from './router'
-
-// 检验数据类型
-import '@/utils/toType'
-
-import '@/api/mock/index'
-import api from '@/api'
-Vue.prototype.$api = api
 
 import util from '@/libs/util.js'
 
@@ -42,20 +28,8 @@ document.addEventListener('visibilitychange', () => {
 
 import { mapState } from 'vuex'
 
-import mixin from './mixin/globalMixin.js'
-Vue.mixin(mixin)
-
-Vue.prototype.$bus = new Vue() // event Bus 用于无关系组件间的通信。
-
-// 导入表格
-import pluginImport from '@d2-projects/vue-table-import'
-Vue.use(pluginImport)
 // 获取多语言的接口
 // import { getLanguage } from '@/api/modules/common'
-// 核心插件
-Vue.use(d2Admin)
-// 闻泰内部组件
-Vue.use(WtUi)
 
 // 环境配置
 import config from '@/libs/config'
