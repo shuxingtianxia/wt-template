@@ -1,7 +1,8 @@
 import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
-import { login, logout, refeshToken } from '@/api/modules/user'
+import apiUser from '@/api/modules/user'
+const { login, logout, refeshToken } = apiUser
 /*
   该页面主要处理用户方面，比如：登录，注册，清空用户信息，退出登录，刷新token
 */

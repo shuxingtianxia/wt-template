@@ -1,4 +1,3 @@
-import { getItemValue } from '@/api/modules/common'
 export default {
   data() {
     return {
@@ -18,7 +17,7 @@ export default {
     // 获取数据字典，后台没有批量接口
     getDictionary() {
       this.dictionaryKey.length > 0 && this.dictionaryKey.forEach(item => {
-        getItemValue(item.key)
+        this.$api.getItemValue({ dictName: item.key })
           .then(res => {
             // 是否有默认
             let defaultValue = ''

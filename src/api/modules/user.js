@@ -1,75 +1,11 @@
-import { requestForMock } from '@/api/service'
-// 正式接口开发请使用 service 代替 requestForMock
-const service = requestForMock
-/*
-  登录
-*/
-export function login(params) {
-  return service({
-    url: '/service1/tms-portal/user/login',
-    method: 'get',
-    params
-  })
-}
+import { getAction, getBlobProgress } from '@/api/axios'
 
-/*
-  获取验证码
-*/
-export function checkCode(id) {
-  return service({
-    url: `/service1/tms-portal/user/checkCode/${id}`,
-    method: 'get',
-    responseType: 'blob'
-  })
-}
-
-/*
-  获取当前用户拥有的菜单
-*/
-export function getMenuList() {
-  return service({
-    url: `/service1/tms-portal/user/getMenuList`,
-    method: 'get'
-  })
-}
-
-/*
-  获取当前用户拥有的按钮
-*/
-export function getButtonList() {
-  return service({
-    url: `/service1/tms-portal/user/getButtonList`,
-    method: 'get'
-  })
-}
-
-/*
-  忘记密码
-*/
-export function forget(params) {
-  return service({
-    url: `/service1/tms-portal/user/retrievePassword`,
-    method: 'get',
-    params
-  })
-}
-
-/*
-  退出登录
-*/
-export function logout() {
-  return service({
-    url: `/service1/tms-portal/user/logout`,
-    method: 'get'
-  })
-}
-
-/*
-  刷新token
-*/
-export function refeshToken() {
-  return service({
-    url: `/service1/tms-portal/user/refresh/token`,
-    method: 'get'
-  })
+export default {
+  login: (params) => getAction({ url: '/service1/tms-portal/user/login', params }), // 登录
+  checkCode: (id) => getBlobProgress({ url: `/service1/tms-portal/user/checkCode/${id}` }), // 获取验证码
+  getMenuList: () => getAction({ url: `/service1/tms-portal/user/getMenuList` }), // 获取当前用户拥有的菜单权限
+  getButtonList: () => getAction({ url: `/service1/tms-portal/user/getButtonList` }), // 获取当前用户拥有的按钮权限
+  forget: (params) => getAction({ url: `/service1/tms-portal/user/retrievePassword`, params }), // 忘记密码
+  logout: () => getAction({ url: `/service1/tms-portal/user/logout` }), // 退出登录
+  refeshToken: () => getAction({ url: `/service1/tms-portal/user/refresh/token` }) // 刷新token
 }

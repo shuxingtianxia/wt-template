@@ -82,6 +82,7 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       //   // 否则全部重定向到登录页
+      console.log('9999999', 9999999)
       next({
         name: 'login',
         query: {

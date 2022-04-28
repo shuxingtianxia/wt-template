@@ -24,6 +24,8 @@ import router from './router'
 import '@/utils/toType'
 
 import '@/api/mock/index'
+import api from '@/api'
+Vue.prototype.$api = api
 
 import util from '@/libs/util.js'
 
@@ -49,7 +51,7 @@ Vue.prototype.$bus = new Vue() // event Bus 用于无关系组件间的通信。
 import pluginImport from '@d2-projects/vue-table-import'
 Vue.use(pluginImport)
 // 获取多语言的接口
-import { getLanguage } from '@/api/modules/common'
+// import { getLanguage } from '@/api/modules/common'
 // 核心插件
 Vue.use(d2Admin)
 // 闻泰内部组件
@@ -78,12 +80,12 @@ new Vue({
   },
   created() {
     // 收集后端返回的多语言添加到对应的json文件中
-    getLanguage().then(res => {
-      if (res.code === 200) {
-        this.setLanguage('en', res)
-        this.setLanguage('zh', res)
-      }
-    })
+    // getLanguage().then(res => {
+    //   if (res.code === 200) {
+    //     this.setLanguage('en', res)
+    //     this.setLanguage('zh', res)
+    //   }
+    // })
   },
   mounted() {
     // 展示系统信息

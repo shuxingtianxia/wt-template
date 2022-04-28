@@ -1,13 +1,7 @@
 import files from '@/utils/files'
-import { addEnclosure, downloadEnclosure, delEnclosure } from '@/api/modules/common'
 export default {
   data() {
-    return {
-
-    }
-  },
-  created() {
-
+    return {}
   },
   methods: {
     // 取消操作，路由后退，关闭当前标签
@@ -36,7 +30,7 @@ export default {
             })
           }
         })
-        addEnclosure(formData).then(res => {
+        this.$api.addEnclosure(formData).then(res => {
           if (res.code === 200) {
             if (arg.length) {
               this.afterUploadFile(res.data, ...arg)
@@ -50,7 +44,7 @@ export default {
     // 下载文件
     download(file) {
       this.loading = true
-      downloadEnclosure({ id: file.id }).then(res => {
+      this.$api.downloadEnclosure({ id: file.id }).then(res => {
         files.download(res, file.originalAddress)
       }).finally(() => {
         this.loading = false
@@ -62,7 +56,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.loading = true
-        delEnclosure({ id }).then(res => {
+        this.$api.delEnclosure({ id }).then(res => {
           if (res.code === 200) {
             this.$message.success('删除成功')
             this.afterRemoveFile(id, ...args)

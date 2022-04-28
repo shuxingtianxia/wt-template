@@ -1,9 +1,9 @@
 // 设置文件
 import setting from '@/setting.js'
-import { getMenuList } from '@/api/modules/user'
+import apiUser from '@/api/modules/user'
 import { cloneDeep } from 'lodash'
 import { frameInRoutes } from '@/router/routes'
-
+const { getMenuList } = apiUser
 // 递归菜单
 function menuList(data) {
   data.forEach(item => {
