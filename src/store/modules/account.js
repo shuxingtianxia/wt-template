@@ -1,5 +1,7 @@
 import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
+import VueRouter from 'vue-router'
+import routes from '@/router/routes'
 import router from '@/router'
 import apiUser from '@/api/modules/user'
 const { login, logout, refeshToken } = apiUser
@@ -71,6 +73,13 @@ export default {
       await commit('menu/clearRoutes', [], { root: true })
       // 跳转路由
       router.push({ name: 'login' })
+      // 清空动态添加的router
+      const newRouter = new VueRouter({
+        mode: 'history',
+        base: process.env.BASE_URL,
+        routes
+      })
+      router.matcher = newRouter.matcher
     },
     // 刷新token
     refeshToken({ commit }) {

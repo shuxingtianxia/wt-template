@@ -49,19 +49,21 @@ router.beforeEach(async(to, from, next) => {
     util.cookies.set('token', ssoToken)
   }
   const token = util.cookies.get('token')
-  console.log('token', token)
+  // console.log('token', token)
   if (token && token !== 'undefined') {
     // 有token，并且跳的是登录页，直接切换到首页
     // 获取菜单权限
     const hasRoutes = store.getters.asideRoutes && store.getters.asideRoutes.length
     if (!hasRoutes) {
-      store.dispatch('menu/getMenu').then(res => {
+      await store.dispatch('menu/getMenu').then(res => {
         res.forEach(item => {
           router.addRoute(item)
         })
+        console.log('111', 111)
       })
     }
     await store.dispatch('page/isLoaded')
+    console.log('222', 222)
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
@@ -82,7 +84,6 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       //   // 否则全部重定向到登录页
-      console.log('9999999', 9999999)
       next({
         name: 'login',
         query: {

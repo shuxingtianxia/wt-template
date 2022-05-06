@@ -11,7 +11,6 @@ export default {
     }
   },
   created() {
-    console.log('this.$spi', this.$api.aaa({ a: 11 }, { id: 123 }))
   },
   methods: {
   }

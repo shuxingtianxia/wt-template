@@ -54,6 +54,28 @@
                 >
               </el-input>
             </el-form-item>
+            <el-form-item prop="checkCode">
+              <div class="code">
+                <el-input v-model="form.checkCode" class="code-input" placeholder="输入验证码" :maxlength="4" @focus="handleFocus" @blur="handleBlur">
+                  <img
+                    slot="prefix"
+                    class="el-icon-edit el-input__icon icon-img icon-default"
+                    src="@/assets/images/login/icon_passwprd@2x(1).png"
+                  >
+                  <img
+                    slot="prefix"
+                    class="el-icon-edit el-input__icon icon-img icon-success"
+                    src="@/assets/images/login/icon3_verification.png"
+                  >
+                  <img
+                    slot="prefix"
+                    class="el-icon-edit el-input__icon icon-img icon-error"
+                    src="@/assets/images/login/icon6_verification.png"
+                  >
+                </el-input>
+                <img class="img" :src="image" alt="" @click="getCode()">
+              </div>
+            </el-form-item>
             <el-form-item class="login-btn">
               <el-button class="btn" @click="clickLogin">
                 登录
@@ -154,7 +176,18 @@ export default {
       id: Date.now()
     }
   },
+  created() {
+    // 获取验证码
+    this.getCode()
+  },
   methods: {
+    // 获取验证码
+    getCode() {
+      console.log('this', this)
+      this.$api.checkCode(this.id).then(res => {
+        this.image = window.URL.createObjectURL(res)
+      })
+    },
     // 查看密码
     showPwd() {
       this.isShowPwd = !this.isShowPwd

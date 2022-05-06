@@ -1,71 +1,11 @@
-import { requestForMock } from 'wingtech-ui/src/api/service'
 
-// 正式接口开发请使用 service 代替 requestForMock
-const service = requestForMock
+import { postAction, putAction, deleteAction } from '@/api'
 
-/* --------------------- 工厂和仓库管理 ------------------------ */
-/*
-  分页获取模块列表
-*/
-export function getFactoryList(data) {
-  return service({
-    url: '/factoryWarehouse/list',
-    method: 'post',
-    data
-  })
-}
-
-/*
-  不分页获取模块列表
-*/
-export function getFactoryAll(data) {
-  return service({
-    url: '/factoryWarehouse/all',
-    method: 'post',
-    data
-  })
-}
-
-/*
-  添加模块列表
-*/
-export function addFactoryList(data) {
-  return service({
-    url: '/factoryWarehouse/add',
-    method: 'post',
-    data
-  })
-}
-
-/*
-  编辑模块列表
-*/
-export function editFactoryList(data) {
-  return service({
-    url: '/factoryWarehouse/edit',
-    method: 'put',
-    data
-  })
-}
-
-/*
-  导入模块列表
-*/
-export function importExcel(data) {
-  return service({
-    url: '/factoryWarehouse/importExcel',
-    method: 'post',
-    data
-  })
-}
-
-/*
-  导入模块列表
-*/
-export function batchDeleteFactory(data) {
-  return service({
-    url: '/factoryWarehouse/deleteBatch',
-    method: 'delete',
-    data
-  })
+export default {
+  getFactoryList: (data) => postAction({ url: '/factoryWarehouse/list', data }), // 分页获取模块列表
+  getFactoryAll: (data) => postAction({ url: '/factoryWarehouse/all', data }), // 不分页获取模块列表
+  addFactoryList: (data) => postAction({ url: '/factoryWarehouse/add', data }), // 添加模块列表
+  editFactoryList: (data) => putAction({ url: '/factoryWarehouse/edit', data }), // 编辑模块列表
+  importExcel: (data) => postAction({ url: '/factoryWarehouse/importExcel', data }), // 编辑模块列表
+  batchDeleteFactory: (data) => deleteAction({ url: '/factoryWarehouse/deleteBatch', data }) // 导入模块列表
 }

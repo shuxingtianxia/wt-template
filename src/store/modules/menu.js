@@ -190,9 +190,6 @@ export default {
     // 获取菜单权限
     async getMenu({ dispatch, commit }) {
       // 存左侧菜单到vuex中
-      commit('asideSet', [...frameInRoutes])
-      commit('page/init', [...frameInRoutes], { root: true })
-      await dispatch('account/load', {}, { root: true })
       let flatRoutes = null
       await getMenuList().then(async res => {
         if (res.code === 200) {

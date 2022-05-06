@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'element-ui'
 
 // 核心插件
 import d2Admin from '@/plugin/d2admin'

@@ -25,7 +25,6 @@
 </template>
 <script>
 import { fields } from './config/add'
-import { getFactoryAll } from '@/api/modules/configure/factory'
 import { clearData } from '@/utils/clearData'
 export default {
   name: 'PathConfigureAdd',
@@ -98,7 +97,7 @@ export default {
   },
   methods: {
     getFactory() {
-      getFactoryAll({}).then(res => {
+      this.$api.getFactoryAll({}).then(res => {
         if (res.code === 200) {
           this.options = { ...this.options, ...{
             old: res.data,
