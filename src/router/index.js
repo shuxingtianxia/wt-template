@@ -59,11 +59,9 @@ router.beforeEach(async(to, from, next) => {
         res.length && res.forEach(item => {
           router.addRoute(item)
         })
-        console.log('111', 111)
       })
     }
     await store.dispatch('page/isLoaded')
-    console.log('222', 222)
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
