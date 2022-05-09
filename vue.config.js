@@ -56,6 +56,16 @@ module.exports = {
           '^/i18n': '/i18n'
         },
         secure: false
+      },
+      '/srm': {
+        target: 'https://srmdev.wingtech.com', // 泽邦
+        changeOrigin: true,
+        timeout: 60000,
+        websocket: false,
+        pathRewrite: {
+          '^/srm': '/service1'
+        },
+        secure: false
       }
     }
   },

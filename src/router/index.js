@@ -56,7 +56,7 @@ router.beforeEach(async(to, from, next) => {
     const hasRoutes = store.getters.asideRoutes && store.getters.asideRoutes.length
     if (!hasRoutes) {
       await store.dispatch('menu/getMenu').then(res => {
-        res.forEach(item => {
+        res.length && res.forEach(item => {
           router.addRoute(item)
         })
         console.log('111', 111)
