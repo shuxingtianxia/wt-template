@@ -3,6 +3,7 @@ import setting from '@/setting.js'
 import apiUser from '@/api/modules/user'
 import { cloneDeep } from 'lodash'
 import { frameInRoutes } from '@/router/routes'
+import router from '@/router'
 const { getMenuList } = apiUser
 // 递归菜单
 function menuList(data) {
@@ -98,6 +99,7 @@ function generateFlatRoutes(accessRoutes) {
 export default {
   namespaced: true,
   state: {
+    isRoutes: true, // 默认有权限
     // 侧栏菜单
     aside: [],
     asyncRoutes: [], // 存放请求过来路由的数据
@@ -198,6 +200,10 @@ export default {
             item.isOne = true
           })
           menuList(routes)
+          // 有木有权限
+          if (!routes.length) {
+            commit('setIsRoutes', false)
+          }
           // 存左侧菜单到vuex中
           await commit('asideSet', [...frameInRoutes, ...routes])
           await commit('page/init', [...frameInRoutes, ...routes], { root: true })
@@ -207,9 +213,14 @@ export default {
           // 把三级路由转成二级路由
           flatRoutes = generateFlatRoutes(asyncRoutes)
           commit('asyncRoutes', flatRoutes)
+          router.addRoutes([...flatRoutes, {
+            path: '*',
+            name: 'NoFind',
+            component: () => import('@/views/system/error/404')
+            // component: (resolve) => require([`@/views/system/error/404`], resolve)
+          }])
         }
       })
-      return flatRoutes
     }
   },
   mutations: {
@@ -223,6 +234,10 @@ export default {
     // 请求过来的路由
     asyncRoutes: (state, asyncRoutes) => {
       state.asyncRoutes = asyncRoutes
+    },
+    // 设置是不是有权限
+    setIsRoutes(state, flag) {
+      state.isRoutes = flag
     },
     // 权限按钮
     setBtns: (state, btns) => {

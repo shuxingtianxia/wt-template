@@ -49,22 +49,25 @@ router.beforeEach(async(to, from, next) => {
     util.cookies.set('token', ssoToken)
   }
   const token = util.cookies.get('token')
-  // console.log('token', token)
   if (token && token !== 'undefined') {
     // 有token，并且跳的是登录页，直接切换到首页
-    // 获取菜单权限
-    const hasRoutes = store.getters.asideRoutes && store.getters.asideRoutes.length
-    if (!hasRoutes) {
-      await store.dispatch('menu/getMenu').then(res => {
-        res.length && res.forEach(item => {
-          router.addRoute(item)
-        })
-      })
-    }
-    await store.dispatch('page/isLoaded')
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
+      // 获取菜单权限
+      const hasRoutes = store.getters.asideRoutes && store.getters.asideRoutes.length
+      if (!hasRoutes) {
+        await store.dispatch('menu/getMenu')
+        // 有木有权限
+        const flag = store.getters.isRoutes
+        console.log('flag', !flag && to.path !== '/403')
+        if (!flag && to.path !== '/403') {
+          next({ path: '/403' })
+          return
+        }
+      }
+      await store.dispatch('page/isLoaded')
+      console.log(to, '8888888888888')
       next()
     }
   } else {
@@ -103,12 +106,11 @@ router.afterEach((to, form, next) => {
 })
 
 router.onReady(() => {
-  router.addRoute({
+  router.addRoutes([{
     path: '*',
-    name: '404',
-    redirect: '/404',
-    component: (resolve) => require([`@/views/system/error/404`], resolve)
-  })
+    name: 'NoFind',
+    component: () => import('@/views/system/error/404')
+  }])
 })
 
 export default router

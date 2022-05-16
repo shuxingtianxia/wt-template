@@ -1,6 +1,5 @@
 <template>
   <div class="supplier">
-    <!-- <wt-message></wt-message> -->
     <wt-button type="danger" disabled @click="handleBtn">
       阿尼牛
     </wt-button>
