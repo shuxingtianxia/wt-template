@@ -36,7 +36,7 @@ module.exports = {
     proxy: {
       '/service1': {
         // target: "http://192.168.130.220:30101", //原始 dev
-        target: 'http://srmgatewaydev.wingtech.com', // dev环境
+        target: 'https://pmisqas.wingtech.com', // dev环境
         // target: " http://192.168.46.65:30001", //x
         // target: " http://192.168.47.70:30001", //s
         changeOrigin: true,
