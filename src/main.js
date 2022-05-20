@@ -12,6 +12,8 @@ import refreshToken from './utils/refreshToken'
 refreshToken.setRefreshToken()
 // 菜单和路由设置
 import router from './router'
+// 数据监控  sentry
+import '@/plugin/sentry'
 
 import util from '@/libs/util.js'
 
@@ -83,3 +85,4 @@ new Vue({
   },
   render: h => h(App)
 }).$mount('#app')
+throw new Error('baocuo')
