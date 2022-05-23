@@ -9,6 +9,7 @@ import pluginImport from '@d2-projects/vue-table-import'
 // 闻泰内部组件
 import WtUi from 'wingtech-ui'
 import 'wingtech-ui/lib/index.css'
+import '@/assets/style/theme/wingtech/index.scss' // 组件自定义样式
 // 引入element、vxe-table、sso路径、下载、上传、删除文件、$api、eventBus(用于无关系组件间的通信)
 import 'wingtech-ui/src/plugin'
 
