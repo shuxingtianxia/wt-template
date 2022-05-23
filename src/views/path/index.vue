@@ -1,6 +1,6 @@
 <template>
   <div class="supplier">
-    <wt-button type="danger" disabled @click="handleBtn">
+    <wt-button type="danger" @click="handleBtn">
       阿尼牛
     </wt-button>
     <wt-list-view

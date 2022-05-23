@@ -184,7 +184,6 @@ export default {
     toJSON() {},
     // 获取验证码
     getCode() {
-      console.log('this', this)
       this.$api.checkCode(this.id).then(res => {
         this.image = window.URL.createObjectURL(res)
       })
@@ -196,7 +195,6 @@ export default {
     // 登录
     clickLogin() {
       this.form.id = this.id
-      console.log(window.a.b)
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$store.dispatch('account/login', this.form).then(res => {

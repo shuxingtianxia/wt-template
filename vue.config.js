@@ -2,6 +2,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const VueFilenameInjector = require('@d2-projects/vue-filename-injector')
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
 const forElementUI = require('webpack-theme-color-replacer/forElementUI')
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 // 拼接路径
 const resolve = dir => require('path').join(__dirname, dir)
@@ -90,6 +91,17 @@ module.exports = {
           threshold: 10240,
           minRatio: 0.8,
           deleteOriginalAssets: false
+        }),
+        // 数据监控sourcemap
+        new SentryCliPlugin({
+          release: '0.0.1',
+          authToken: 'a5840ce9f45747839e30f82de5718fb9f7936578d13c4936887668a4ae240d66',
+          url: 'http://192.168.56.101:9000',
+          org: 'sentry',
+          project: 'empty-template',
+          urlPrefix: '~/',
+          include: './dist',
+          ignore: ['node_modules']
         })
       ]
     }
@@ -176,7 +188,7 @@ module.exports = {
     }
   },
   // 不输出 map 文件
-  productionSourceMap: false,
+  productionSourceMap: true,
   // i18n
   pluginOptions: {
     i18n: {
