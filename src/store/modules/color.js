@@ -1,6 +1,7 @@
-import { cloneDeep } from 'lodash'
+// import { cloneDeep } from 'lodash'
 import client from 'webpack-theme-color-replacer/client'
-import forElementUI from 'webpack-theme-color-replacer/forElementUI'
+// import forElementUI from 'webpack-theme-color-replacer/forElementUI'
+import themeUtil from 'webpack-theme-color-replacer/themeUtil'
 
 export default {
   namespaced: true,
@@ -46,6 +47,7 @@ export default {
         defaultValue: process.env.VUE_APP_ELEMENT_COLOR,
         user: true
       }, { root: true })
+      console.log('999', 999)
       // 应用
       commit('apply', {
         oldColor: old,
@@ -61,9 +63,10 @@ export default {
      * @param {Object} payload newColor {String} 新颜色
      */
     apply(state, { oldColor, newColor }) {
+      document.body.style.setProperty('--system-primary-color', newColor)
+      const customB = parseInt(Math.random() * 256).toString(16) // 按你需要生成颜色
       var options = {
-        oldColors: cloneDeep(forElementUI.getElementUISeries(oldColor)),
-        newColors: cloneDeep(forElementUI.getElementUISeries(newColor))
+        newColors: themeUtil.getMyColors(newColor, ['#59' + customB + customB, '#' + customB + '88' + customB])
       }
       client.changer.changeColor(options)
     }

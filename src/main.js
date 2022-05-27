@@ -15,18 +15,18 @@ import router from './router'
 // 数据监控  sentry
 import '@/plugin/sentry'
 
-import util from '@/libs/util.js'
+// import util from '@/libs/util.js'
 
 // 切换标签页
-document.addEventListener('visibilitychange', () => {
-  const whiteList = ['/login']
-  const curPath = router.history.current.path
-  const token = util.cookies.get('token')
+// document.addEventListener('visibilitychange', () => {
+//   const whiteList = ['/login']
+//   const curPath = router.history.current.path
+//   const token = util.cookies.get('token')
 
-  if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
-    if (token && token !== 'undefined') refreshToken.beforeDestroy()
-  }
-})
+//   if (document.visibilityState === 'hidden' && !whiteList.includes(curPath)) {
+//     if (token && token !== 'undefined') refreshToken.beforeDestroy()
+//   }
+// })
 
 import { mapState } from 'vuex'
 

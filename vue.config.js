@@ -1,7 +1,8 @@
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const VueFilenameInjector = require('@d2-projects/vue-filename-injector')
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
-const forElementUI = require('webpack-theme-color-replacer/forElementUI')
+const themeUtil = require('webpack-theme-color-replacer/themeUtil')
+// const forElementUI = require('webpack-theme-color-replacer/forElementUI')
 const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 // 拼接路径
@@ -132,11 +133,16 @@ module.exports = {
       .plugin('theme-color-replacer')
       .use(ThemeColorReplacer, [{
         fileName: 'css/theme-colors.[contenthash:8].css',
-        matchColors: [
-          ...forElementUI.getElementUISeries(process.env.VUE_APP_ELEMENT_COLOR) // Element-ui主色系列
-        ],
-        externalCssFiles: ['./node_modules/element-ui/lib/theme-chalk/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
-        changeSelector: forElementUI.changeSelector
+        matchColors: themeUtil.getMyColors(process.env.VUE_APP_ELEMENT_COLOR, [process.env.VUE_APP_ELEMENT_COLOR, '#c655dd']),
+        // matchColors: [
+        //   ...forElementUI.getElementUISeries(process.env.VUE_APP_ELEMENT_COLOR) // Element-ui主色系列
+        // ],
+        externalCssFiles: ['./node_modules/wingtech-ui/lib/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
+        changeSelector: themeUtil.changeSelector
+        // changeSelector(cssSelector) { // 可选，功能。更改css选择器以提高css优先级，从而解决延迟加载问题。
+        //   console.log('cssSelector', cssSelector)
+        //   return cssSelector
+        // }
       }])
     config
       // 开发环境 sourcemap 不包含列信息
