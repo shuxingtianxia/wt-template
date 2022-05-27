@@ -95,7 +95,7 @@ module.exports = {
         }),
         // 数据监控sourcemap
         new SentryCliPlugin({
-          release: '0.0.1',
+          release: process.env.VUE_APP_RELEASE,
           authToken: 'a5840ce9f45747839e30f82de5718fb9f7936578d13c4936887668a4ae240d66',
           url: 'http://192.168.56.101:9000',
           org: 'sentry',

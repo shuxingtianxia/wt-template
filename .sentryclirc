@@ -1,7 +1,7 @@
 [auth]
-token='a5840ce9f45747839e30f82de5718fb9f7936578d13c4936887668a4ae240d66'
+token=a5840ce9f45747839e30f82de5718fb9f7936578d13c4936887668a4ae240d66
 
 [defaults]
-url="http://192.168.56.101:9000"
-org="sentry"
-project="empty-template"
+url=http://192.168.56.101:9000
+org=sentry
+project=empty-template

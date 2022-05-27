@@ -3,6 +3,9 @@
     <wt-button type="danger" @click="handleBtn">
       阿尼牛
     </wt-button>
+    <el-button type="danger" @click="handleBtn">
+      阿尼牛
+    </el-button>
     <wt-list-view
       ref="wtListView"
       :options="options"
@@ -93,10 +96,7 @@ export default {
         type: 'warning',
         duration: 1100
       })
-      this.$message({
-        message: 'nihao',
-        duration: 1100
-      })
+      console.log(window.b.s)
     },
     // 表头数据操作
     tableHeaderFn(headerData) {

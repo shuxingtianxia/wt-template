@@ -7,11 +7,12 @@ import 'nprogress/nprogress.css'
 
 import store from '@/store/index'
 import util from '@/libs/util.js'
+import cookies from '@/utils/cookies'
 
 // 路由数据
 import routes from './routes'
-
-const IsProd = process.env.NODE_ENV === 'production'
+// process.env.NODE_ENV === 'production'
+const IsProd = false
 
 // fix vue-router NavigationDuplicated
 const VueRouterPush = VueRouter.prototype.push
@@ -45,10 +46,11 @@ router.beforeEach(async(to, from, next) => {
   // 进度条
   NProgress.start()
   if (IsProd) {
-    const ssoToken = util.cookies.getToken()
-    util.cookies.set('token', ssoToken)
+    console.log('cookies', cookies)
+    const ssoToken = cookies.getToken()
+    cookies.set('token', ssoToken)
   }
-  const token = util.cookies.get('token')
+  const token = cookies.get('token')
   if (token && token !== 'undefined') {
     // 有token，并且跳的是登录页，直接切换到首页
     if (to.path === '/login') {

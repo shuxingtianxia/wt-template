@@ -2,6 +2,20 @@ import Cookies from 'js-cookie'
 
 const cookies = {}
 
+const TokenKey = 'JSESSIONID'
+// 获取token
+cookies.getToken = function getToken(domain) {
+  return Cookies.get(TokenKey, domain)
+}
+
+cookies.setToken = function setToken(token) {
+  return Cookies.set(TokenKey, token)
+}
+
+cookies.removeToken = function removeToken() {
+  return Cookies.remove(TokenKey)
+}
+
 /**
  * @description 存储 cookie 值
  * @param {String} name cookie name
