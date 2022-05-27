@@ -90,12 +90,12 @@ export default {
   },
   methods: {
     handleBtn() {
-      this.$wtMessage({
-        message: '你好',
-        assist: true,
-        type: 'warning',
-        duration: 1100
-      })
+      // this.$wtMessage({
+      //   message: '你好',
+      //   assist: true,
+      //   type: 'warning',
+      //   duration: 1100
+      // })
       console.log(window.b.s)
     },
     // 表头数据操作
