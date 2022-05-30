@@ -50,7 +50,8 @@ function castToFlatRoute(routes, parentPath, flatRoutes = []) {
         name: item.name,
         path: (parentPath + '/' + item.path).substring(1),
         component: item.component,
-        meta: item.meta
+        meta: item.meta,
+        componentPath: item.componentPath
       })
     }
   }
@@ -85,7 +86,8 @@ function generateFlatRoutes(accessRoutes) {
       path: item.path,
       component: item.component,
       redirect: item.redirect,
-      children: childrenFflatRoutes
+      children: childrenFflatRoutes,
+      meta: item.meta
     })
   }
   return flatRoutes
@@ -134,7 +136,6 @@ export default {
     async asideCollapseToggle({ state, dispatch }) {
       // store 赋值
       state.asideCollapse = !state.asideCollapse
-      console.log('state.asideCollapse', state.asideCollapse)
       // 持久化
       await dispatch('db/set', {
         dbName: 'sys',
@@ -213,6 +214,7 @@ export default {
           // 把三级路由转成二级路由
           flatRoutes = generateFlatRoutes(asyncRoutes)
           commit('asyncRoutes', flatRoutes)
+          console.log('flatRoutes', flatRoutes)
           router.addRoutes([...flatRoutes, {
             path: '*',
             name: 'NoFind',

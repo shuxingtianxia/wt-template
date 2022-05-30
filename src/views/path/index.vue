@@ -3,9 +3,12 @@
     <wt-button type="danger" @click="handleBtn">
       阿尼牛
     </wt-button>
-    <el-button type="danger" @click="handleBtn">
+    <el-button style="height: 32px" type="primary" @click="handleBtn">
       阿尼牛
     </el-button>
+    <wt-button type="danger" @click="handleBtn">
+      阿尼牛
+    </wt-button>
     <wt-list-view
       ref="wtListView"
       :options="options"
@@ -90,13 +93,14 @@ export default {
   },
   methods: {
     handleBtn() {
-      // this.$wtMessage({
-      //   message: '你好',
-      //   assist: true,
-      //   type: 'warning',
-      //   duration: 1100
-      // })
-      console.log(window.b.s)
+      this.$wtMessage({
+        message: '你好',
+        assist: true,
+        type: 'warning',
+        duration: 1100
+      })
+      const a = window.b.c
+      console.log('a', a)
     },
     // 表头数据操作
     tableHeaderFn(headerData) {

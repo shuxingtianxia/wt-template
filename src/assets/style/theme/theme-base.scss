@@ -139,8 +139,14 @@
         @extend %unable-select;
         i {
           font-size: 20px;
-          margin-top: 4px;
+          // margin-top: 4px;
         }
+      }
+      // 面包屑
+      .breadcrumb{
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       // [菜单] 顶栏
       .el-menu {

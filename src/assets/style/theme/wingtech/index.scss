@@ -1,10 +1,11 @@
 @import 'wingtech-ui/styles/variable.scss';
 
-:root {
-  --system-primary-color: #409eff;
-}
-// $wt-danger-color: var(--system-primary-color);
 
+$wt-primary-color: blue;
+$wt-danger-color: $color-primary;
+$wt-danger-hover-color: blue;
+$wt-danger-click-color: rgb(2, 2, 2);
+$wt-success-click-color: #07C180;
 @import 'wingtech-ui/styles/reset.scss';
 @import 'wingtech-ui/styles/modules.scss';
 @import 'wingtech-ui/styles/loading.scss';

@@ -18,6 +18,7 @@
         <div class="toggle-aside-btn" flex-box="0" @click="handleToggleAside">
           <d2-icon name="bars" />
         </div>
+        <d2-header-breadcrumb class="breadcrumb" flex-box="0"></d2-header-breadcrumb>
         <div flex-box="1"></div>
         <!-- 顶栏右侧 -->
         <div class="d2-header-right" flex-box="0">
@@ -78,6 +79,7 @@ import d2HeaderTheme from './components/header-theme'
 import d2HeaderUser from './components/header-user'
 import d2HeaderLog from './components/header-log'
 import d2HeaderColor from './components/header-color'
+import d2HeaderBreadcrumb from './components/header-breadcrumb'
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'D2LayoutHeaderAside',
@@ -90,7 +92,8 @@ export default {
     d2HeaderTheme,
     d2HeaderUser,
     d2HeaderLog,
-    d2HeaderColor
+    d2HeaderColor,
+    d2HeaderBreadcrumb
   },
   data() {
     return {
