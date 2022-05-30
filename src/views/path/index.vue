@@ -1,6 +1,6 @@
 <template>
   <div class="supplier">
-    <wt-button type="danger" @click="handleBtn">
+    <wt-button @click="handleBtn">
       阿尼牛
     </wt-button>
     <el-button style="height: 32px" type="primary" @click="handleBtn">

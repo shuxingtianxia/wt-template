@@ -21,6 +21,7 @@
     "@sentry/vue": "^6.19.7",
     "axios": "^0.19.0",
     "axios-mock-adapter": "^1.18.1",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "better-scroll": "^1.15.2",
     "core-js": "^3.4.3",
     "dayjs": "^1.8.17",
@@ -45,7 +46,7 @@
     "vxe-table": "3.0.3",
     "vxe-table-plugin-charts": "1.6.0",
     "vxe-table-plugin-menus": "2.0.1",
-    "wingtech-ui": "^0.3.3",
+    "wingtech-ui": "^0.3.4",
     "xe-clipboard": "^1.10.0",
     "xe-utils": "^3.3.0"
   },
