@@ -85,7 +85,7 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       configNew.externals = externals
       configNew.plugins = [
-        // gzip
+      // gzip
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',
           test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
@@ -96,7 +96,7 @@ module.exports = {
         // 数据监控sourcemap
         new SentryCliPlugin({
           release: process.env.VUE_APP_RELEASE,
-          authToken: 'a5840ce9f45747839e30f82de5718fb9f7936578d13c4936887668a4ae240d66',
+          authToken: '0ed492e4ac7048f5a2d55e04039994c8af7a2d8242014c4e978ff21d43f70e21',
           url: 'http://192.168.56.101:9000',
           org: 'sentry',
           project: 'empty-template',
