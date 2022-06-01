@@ -82,7 +82,7 @@ module.exports = {
   pages,
   configureWebpack: config => {
     const configNew = {}
-    if (process.env.NODE_ENV === 'production') {
+    if (IsProd) {
       configNew.externals = externals
       configNew.plugins = [
       // gzip

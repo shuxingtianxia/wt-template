@@ -63,7 +63,6 @@ export default {
      * @param {Object} payload newColor {String} 新颜色
      */
     apply(state, { oldColor, newColor }) {
-      document.body.style.setProperty('--system-primary-color', newColor)
       const customB = parseInt(Math.random() * 256).toString(16) // 按你需要生成颜色
       var options = {
         newColors: themeUtil.getMyColors(newColor, ['#59' + customB + customB, '#' + customB + '88' + customB])

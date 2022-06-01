@@ -119,6 +119,7 @@
     .d2-theme-header {
       // logo区域
       .logo-group {
+        background: $theme-bg-mask;
         float: left;
         text-align: center;
         img {

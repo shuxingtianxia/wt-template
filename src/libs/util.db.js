@@ -1,6 +1,7 @@
 import low from 'lowdb'
 import LocalStorage from 'lowdb/adapters/LocalStorage'
 import util from '@/libs/util'
+console.log('111', util)
 import { cloneDeep } from 'lodash'
 
 const adapter = new LocalStorage(`wt-${process.env.VUE_APP_VERSION}`)
