@@ -21,7 +21,7 @@ const externals = {}
 // 多页配置，默认未开启，如需要请参考 https://cli.vuejs.org/zh/config/#pages
 const pages = undefined
 const IsProd = process.env.NODE_ENV === 'production'
-
+console.log('npm_config_report', process.env.npm_config_report)
 module.exports = {
   // 根据你的实际情况更改这里
   publicPath,
@@ -87,11 +87,12 @@ module.exports = {
       configNew.plugins = [
       // gzip
         new CompressionWebpackPlugin({
-          filename: '[path].gz[query]',
+          algorithm: 'gzip', // 使用gzip压缩
+          filename: '[path].gz[query]', // 压缩后的名字
           test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
-          threshold: 10240,
-          minRatio: 0.8,
-          deleteOriginalAssets: false
+          threshold: 10240, // 对超过10kb的数据压缩
+          minRatio: 0.8, // 压缩率少于0.8才会压缩
+          deleteOriginalAssets: false // 是否删除未压缩的源文件
         }),
         // 数据监控sourcemap
         new SentryCliPlugin({
@@ -106,6 +107,7 @@ module.exports = {
         })
       ]
     }
+
     return configNew
   },
   // 默认设置: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-service/lib/config/base.js
@@ -163,6 +165,44 @@ module.exports = {
       .use('text-loader')
       .loader('text-loader')
       .end()
+    // splitChunks
+    config.when(process.env.NODE_ENV !== 'development', _config => {
+      _config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // only package third parties that are initially dependent
+          },
+          wingtechUI: {
+            name: 'chunk-wingtechUI', // split elementUI into a single package
+            priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+            test: /[\\/]node_modules[\\/]_?wingtech-ui(.*)/ // in order to adapt to cnpm
+          },
+          elementUI: {
+            name: 'chunk-elementUI', // split elementUI into a single package
+            priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+            test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+          },
+          vxeTable: {
+            name: 'chunk-vxeTable', // split elementUI into a single package
+            priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+            test: /[\\/]node_modules[\\/]_?vxe-table(.*)/ // in order to adapt to cnpm
+          },
+          commons: {
+            name: 'chunk-commons',
+            test: resolve('src/components'), // can customize your rules
+            minChunks: 2, //  minimum common number
+            priority: 5,
+            reuseExistingChunk: true
+          }
+        }
+      })
+      _config.optimization.usedExports = true
+      _config.optimization.minimize = true
+    })
     // svg
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
@@ -183,11 +223,20 @@ module.exports = {
       .exclude
       .add(resolve('src/assets/svg-icons/icons'))
       .end()
+      .use('image-webpack-loader')
+      .loader('image-webpack-loader')
+      .options({
+        mozjpeg: { progressive: true, quality: 50 },
+        optipng: { enabled: true },
+        pngquant: { quality: [0.5, 0.65], speed: 4 },
+        gifsicle: { interlaced: false }
+      })
+      .end()
     // 重新设置 alias
     config.resolve.alias
       .set('@api', resolve('src/api'))
     // 分析工具
-    if (process.env.npm_config_report) {
+    if (process.env.VUE_APP_npm_config_report) {
       config
         .plugin('webpack-bundle-analyzer')
         .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
