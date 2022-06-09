@@ -47,7 +47,6 @@ export default {
         defaultValue: process.env.VUE_APP_ELEMENT_COLOR,
         user: true
       }, { root: true })
-      console.log('999', 999)
       // 应用
       commit('apply', {
         oldColor: old,

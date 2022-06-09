@@ -59,15 +59,15 @@ module.exports = {
         },
         secure: false
       },
-      '/srm': {
-        target: 'https://srmdev.wingtech.com', // 泽邦
+      '/api': {
+        // target: 'https://srmdev.wingtech.com', // dev环境
+        target: 'https://srmqas.wingtech.com', // dev环境
         changeOrigin: true,
         timeout: 60000,
-        websocket: false,
         pathRewrite: {
-          '^/srm': '/service1'
+          '^/api': '/service1'
         },
-        secure: false
+        secure: false // 如果是https接口，需要配置这个参数 是否验证SSL Certs
       }
     }
   },

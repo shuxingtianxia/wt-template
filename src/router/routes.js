@@ -54,6 +54,12 @@ const frameIn = [
         component: _import('path/edit'),
         name: 'PathConfigureEdit',
         meta: { title: '编辑', icon: 'dashboard', cache: true }
+      },
+      {
+        path: 'srm',
+        component: _import('path/srm/list'),
+        name: 'SrmList',
+        meta: { title: 'srm列表', icon: 'dashboard', cache: true }
       }
     ]
   }

@@ -1,7 +1,7 @@
 import { getAction, getBlobProgress } from 'wingtech-ui/src/api/axios'
 
 export default {
-  login: (params) => getAction({ url: '/user/login', params }), // 登录
+  login: (params) => getAction({ url: '/api/ump/login', params, noEnvUrl: true }), // 登录
   checkCode: (id) => getBlobProgress({ url: `/user/checkCode/${id}` }), // 获取验证码
   getMenuList: () => getAction({ url: `/user/getMenuList` }), // 获取当前用户拥有的菜单权限
   getButtonList: () => getAction({ url: `/user/getButtonList` }), // 获取当前用户拥有的按钮权限

@@ -9,7 +9,7 @@
     "dev": "npm run serve",
     "build": "vue-cli-service build && rm -rf dist/**/*.map",
     "build:preview": "NODE_OPTIONS=--max_old_space_size=4096 vue-cli-service build --mode preview",
-    "report": "vue-cli-service build --mode report",
+    "report": "vue-cli-service build --report",
     "lint": "eslint ./ --ext .js,.vue,.ts",
     "lint:fix": "eslint ./ --ext .js,.vue,.ts --fix",
     "prepare": "husky install",
@@ -47,7 +47,7 @@
     "vxe-table": "3.0.3",
     "vxe-table-plugin-charts": "1.6.0",
     "vxe-table-plugin-menus": "2.0.1",
-    "wingtech-ui": "^0.3.6",
+    "wingtech-ui": "^0.3.9",
     "xe-clipboard": "^1.10.0",
     "xe-utils": "^3.3.0"
   },

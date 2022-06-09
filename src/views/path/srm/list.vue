@@ -1,33 +1,28 @@
 <template>
   <div class="supplier">
-    <wt-button v-if="hasButtonPermission('info-add')" @click="handleBtn">
-      阿尼牛
-    </wt-button>
-    <el-button v-if="hasButtonPermission('info-edit')" style="height: 32px" type="primary" @click="handleBtn1">
-      阿尼牛
-    </el-button>
-    <wt-button type="danger" @click="handleBtn2">
-      阿尼牛
-    </wt-button>
     <wt-list-view
       ref="wtListView"
       :options="options"
-      search-str="valueMap"
       :search-data="searchData"
       :form-config="formConfig"
       :bar-btns="barBtns"
       :table-config="tableConfig"
       :request-config="requestConfig"
       :table-export="tableExport"
-      data-type="content"
-      total-item="totalElements"
+      data-type="dataList"
+      total-item="totalCount"
       :import-obj="{orgType: 'S'}"
       :area-config="{selectCellByHeader: false}"
-      :del-before-fn="delBeforeFn"
-      :table-fn="tableFn"
-      :table-header-fn="tableHeaderFn"
+      :fn-config="fnConfig"
+      :selected-list.sync="selectedList"
+      :request-head="true"
+      :request-search="requestSearch"
+      :head-config="headConfig"
       @handleClickBtn="handleClickBtn"
     >
+      <!-- <template v-slot>
+        <el-button type="primary">anni</el-button>
+      </template> -->
       <template v-slot:fullName="{data}">
         <el-link @click="edit(data.row)">
           {{ data.row.fullName }}
@@ -37,14 +32,16 @@
   </div>
 </template>
 <script>
-import { tableConfig, barBtns, formConfig, tableExport } from './config/path'
-import { getPathList, deleteBatch, importExcel, getPathHeadList } from '@/api/modules/configure/path'
+import { tableConfig, barBtns, formConfig, tableExport } from './config/config'
+import { getHistoryList, deleteBatch, importExcel, getViewList, getFieldList, delView, addView, editView } from '@/api/modules/srm/srm'
 export default {
-  name: 'PathConfigureList',
+  name: 'VmListView',
   data() {
     return {
+      selectedList: [],
       searchData: { // 查询参数
-        orgType: 'S'
+        business: 'srm_qualification_header',
+        tableCode: 'srmQualificationHeaderBuyer'
       },
       // 搜索的配置
       formConfig,
@@ -56,10 +53,14 @@ export default {
       tableExport,
       // 请求配置
       requestConfig: {
-        getTableData: getPathList,
+        getTableData: getHistoryList,
         import: importExcel,
         batchDelete: deleteBatch,
-        getTableHeadData: getPathHeadList
+        getTableHeadData: getFieldList,
+        getViewList,
+        delView,
+        addView,
+        editView
       },
       options: {
         code1: [
@@ -76,33 +77,54 @@ export default {
             value: '660'
           }
         ]
+      },
+      requestSearch: {
+        tableData: {
+          business: 'srm_fcst',
+          tableCode: 'srmFcst'
+        },
+        viewHeadData: {
+          tableCode: 'srmFcst'
+        },
+        viewData: {
+          business: 'srm_fcst',
+          formName: 'srmFcst'
+        }
+      },
+      headConfig: {
+        label: 'displayName',
+        prop: 'fieldName'
+      },
+      fnConfig: {
+        tableFn: this.tableFn,
+        delBeforeFn: this.delBeforeFn
       }
     }
   },
+  watch: {
+    selectedList() {
+      // console.log('this.selectedList', this.selectedList)
+    }
+  },
+  created() {
+  },
   methods: {
+    // 編輯视图函数
+    editViewFn(done) {
+      console.log('done', done)
+      done()
+    },
     handleBtn() {
       this.$wtMessage({
         message: '你好',
-        assist: true, // 基础弹窗还是提示弹窗  // true 是提示弹窗
+        assist: true,
         type: 'warning',
         duration: 1100
       })
-    },
-    handleBtn1() {
-      this.$wtMsgbox({
-        message: '大家好',
-        type: 'danger'
+      this.$message({
+        message: 'nihao',
+        duration: 1100
       })
-    },
-    handleBtn2() {
-      this.$wtMessage.error('你好')
-    },
-    // 表头数据操作
-    tableHeaderFn(headerData) {
-      headerData.forEach(item => {
-        this.$set(item, 'prop', item.value)
-      })
-      return headerData
     },
     // 前端接收接口的数据后操作
     tableFn(tableData) {
@@ -125,9 +147,7 @@ export default {
     handleClickBtn(type) {
       switch (type) {
         case 'add':
-          this.$router.push({ name: 'PathConfigureAdd' })
           break
-
         default:
           break
       }

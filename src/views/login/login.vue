@@ -150,8 +150,8 @@ export default {
       showPwdImg,
       image: '', // 验证码
       form: {
-        email: 'TMS_TEST_02',
-        password: '123456'
+        email: 'admin',
+        password: 'cb8^VfCWFn#gmRabu'
       },
       rules: {
         email: [

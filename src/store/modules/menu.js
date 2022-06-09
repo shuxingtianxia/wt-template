@@ -4,7 +4,7 @@ import apiUser from '@/api/modules/user'
 import { cloneDeep } from 'lodash'
 import { frameInRoutes } from '@/router/routes'
 import router from '@/router'
-const { getMenuList } = apiUser
+const { getMenuList, getButtonList } = apiUser
 // 递归菜单
 function menuList(data) {
   data.forEach(item => {
@@ -214,13 +214,18 @@ export default {
           // 把三级路由转成二级路由
           flatRoutes = generateFlatRoutes(asyncRoutes)
           commit('asyncRoutes', flatRoutes)
-          console.log('flatRoutes', flatRoutes)
           router.addRoutes([...flatRoutes, {
             path: '*',
             name: 'NoFind',
             component: () => import('@/views/system/error/404')
             // component: (resolve) => require([`@/views/system/error/404`], resolve)
           }])
+        }
+      })
+      // 获取按钮权限
+      getButtonList().then(res => {
+        if (res.code === 200) {
+          commit('setBtns', res.data)
         }
       })
     }
