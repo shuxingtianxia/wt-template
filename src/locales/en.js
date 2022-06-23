@@ -1,13 +1,9 @@
 export default {
   '_element': 'en',
   '_name': 'English',
-  'page': {
-    'demo': {
-      'playground': {
-        'locales': {
-          'text': 'D2Admin is a fully open source and free enterprise back-end product front-end integration solution, using the latest front-end technology stack, has prepared most of the project preparations, and with a lot of sample code to help the management system agile development.'
-        }
-      }
-    }
+  'common': {
+    'hello': '100000',
+    'logout': '注销',
+    'log': '没有日志或异常'
   }
 }

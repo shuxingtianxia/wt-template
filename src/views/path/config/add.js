@@ -3,7 +3,6 @@ export const fields = [
     type: 'input',
     prop: 'code',
     label: '输入框',
-    width: '280px',
     rules: [{ required: true, message: '输入框', trigger: 'blur' }],
     editDisabled: true,
     tip: '提示语'
@@ -12,14 +11,12 @@ export const fields = [
     type: 'textarea',
     prop: 'fromFactoryId',
     label: '多行输入框',
-    width: '280px',
     rules: [{ required: true, message: '多行输入框', trigger: 'change' }]
   },
   {
     type: 'number',
     prop: 'number',
-    label: '数字框',
-    width: '280px'
+    label: '数字框'
   },
   {
     type: 'integer',

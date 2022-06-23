@@ -1,7 +1,7 @@
 <template>
   <div class="supplier">
     <wt-button v-if="hasButtonPermission('info-add')" @click="handleBtn">
-      阿尼牛
+      {{ $t('common.hello') }}
     </wt-button>
     <el-button v-if="hasButtonPermission('info-edit')" style="height: 32px" type="primary" @click="handleBtn1">
       阿尼牛
@@ -81,8 +81,13 @@ export default {
   },
   methods: {
     handleBtn() {
+      this.$msgbox({
+        message: this.$t('cancel'),
+        cancelButtonText: '$t(123)',
+        confirmButtonText: 'cancel'
+      })
       this.$wtMessage({
-        message: '你好',
+        message: this.$t('cancel'),
         assist: true, // 基础弹窗还是提示弹窗  // true 是提示弹窗
         type: 'warning',
         duration: 1100
@@ -91,7 +96,8 @@ export default {
     handleBtn1() {
       this.$wtMsgbox({
         message: '大家好',
-        type: 'danger'
+        type: 'danger',
+        confirmButtonText: 'cancel'
       })
     },
     handleBtn2() {

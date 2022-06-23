@@ -34,7 +34,7 @@ export default {
       buttonArr: [
         {
           icon: 'el-icon-plus',
-          text: '保存',
+          text: 'save',
           type: 'primary',
           clickType: 'add'
         },
