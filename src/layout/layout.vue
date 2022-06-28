@@ -149,7 +149,7 @@ export default {
 @import '~@/assets/style/theme/register.scss';
 .d2-theme-container-main-body {
   background: #fff;
-  padding: 20px;
+  padding: 16px;
   margin-right: 20px;
 }
 </style>
