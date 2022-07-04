@@ -1,4 +1,4 @@
-import { serviceForMock } from 'wingtech-ui/src/api/service'
+import { serviceForMock } from '@wt/wingtech-ui/src/api/service'
 import Adapter from 'axios-mock-adapter'
 const mock = new Adapter(serviceForMock)
 // 登录

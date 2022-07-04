@@ -1,4 +1,4 @@
-import { getAction, postAction, putAction, deleteAction } from 'wingtech-ui/src/api/axios'
+import { getAction, postAction, putAction, deleteAction } from '@/api'
 export default {
   getProjectInfoList: (data) => postAction({ url: '/projectInfo/list', data }), // 获取数据权限列表
   addProjectInfo: (data) => postAction({ url: '/projectInfo/add', data }), // 添加数据权限列表

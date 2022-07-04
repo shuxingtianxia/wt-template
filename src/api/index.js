@@ -12,5 +12,5 @@
 // // export const getAction = axios.getAction
 // export const getAction = axios.getAction
 // export const getAction = axios.getAction
-import { getAction, postAction, postFormAction, putAction, deleteAction, getBlobProgress, getBlob, postBlob, postFileAction } from 'wingtech-ui/src/api/axios'
+import { getAction, postAction, postFormAction, putAction, deleteAction, getBlobProgress, getBlob, postBlob, postFileAction } from '@wt/wingtech-ui/src/api/axios'
 export { getAction, postAction, postFormAction, putAction, deleteAction, getBlobProgress, getBlob, postBlob, postFileAction }

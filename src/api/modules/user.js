@@ -1,4 +1,4 @@
-import { getAction, getBlobProgress } from 'wingtech-ui/src/api/axios'
+import { getAction, getBlobProgress } from '@/api'
 
 export default {
   login: (params) => getAction({ url: '/api/ump/login', params, noEnvUrl: true }), // 登录

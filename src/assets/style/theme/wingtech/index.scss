@@ -1,4 +1,4 @@
-@import 'wingtech-ui/styles/variable.scss';
+@import '@wt/wingtech-ui/styles/variable.scss';
 // 自定义wingtech-ui里的变量颜色
 
 // $wt-primary-color: blue;
@@ -7,6 +7,6 @@
 // $wt-danger-click-color: rgb(2, 2, 2);
 // $wt-danger-click-color: #07C180;
 // $wt-default-click-color: red;
-@import 'wingtech-ui/styles/reset.scss';
-@import 'wingtech-ui/styles/modules.scss';
-@import 'wingtech-ui/styles/loading.scss';
+@import '@wt/wingtech-ui/styles/reset.scss';
+@import '@wt/wingtech-ui/styles/modules.scss';
+@import '@wt/wingtech-ui/styles/loading.scss';

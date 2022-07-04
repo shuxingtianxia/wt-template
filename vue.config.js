@@ -50,12 +50,12 @@ module.exports = {
         secure: false // 如果是https接口，需要配置这个参数 是否验证SSL Certs
       },
       '/i18n': {
-        target: 'http://192.168.47.94:8080', // 泽邦
+        target: 'http://zbxt00.wingtech.com/ELSServer_WT', // 泽邦
         changeOrigin: true,
         timeout: 60000,
         websocket: false,
         pathRewrite: {
-          '^/i18n': '/i18n'
+          '^/i18n': ''
         },
         secure: false
       },
@@ -139,7 +139,7 @@ module.exports = {
         // matchColors: [
         //   ...forElementUI.getElementUISeries(process.env.VUE_APP_ELEMENT_COLOR) // Element-ui主色系列
         // ],
-        externalCssFiles: ['./node_modules/wingtech-ui/lib/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
+        externalCssFiles: ['./node_modules/@wt/wingtech-ui/lib/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
         changeSelector: themeUtil.changeSelector
         // changeSelector(cssSelector) { // 可选，功能。更改css选择器以提高css优先级，从而解决延迟加载问题。
         //   console.log('cssSelector', cssSelector)
@@ -179,7 +179,7 @@ module.exports = {
           wingtechUI: {
             name: 'chunk-wingtechUI', // split elementUI into a single package
             priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-            test: /[\\/]node_modules[\\/]_?wingtech-ui(.*)/ // in order to adapt to cnpm
+            test: /[\\/]node_modules[\\/]_?@wt\/wingtech-ui(.*)/ // in order to adapt to cnpm
           },
           elementUI: {
             name: 'chunk-elementUI', // split elementUI into a single package
