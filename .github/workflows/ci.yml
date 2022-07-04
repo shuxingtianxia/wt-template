@@ -7,7 +7,7 @@ name: CI
 on:
   push:
     branches: 
-      - master
+      - sentry
 # 工作流执行的一个或多个任务
 jobs:
   # 任务名称
